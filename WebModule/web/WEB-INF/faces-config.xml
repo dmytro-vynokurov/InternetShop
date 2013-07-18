@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
+              version="2.0">
+
+    <navigation-rule>
+        <from-view-id>/admin/*</from-view-id>
+        <navigation-case>
+            <from-outcome>admin_home</from-outcome>
+            <to-view-id>/admin/home.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>categories</from-outcome>
+            <to-view-id>/admin/categories.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>items</from-outcome>
+            <to-view-id>/admin/items.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>orders</from-outcome>
+            <to-view-id>/admin/orders.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>add_category</from-outcome>
+            <to-view-id>/admin/add_category.xhtml</to-view-id>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>add_item</from-outcome>
+            <to-view-id>/admin/add_item.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>catalogue</from-outcome>
+            <to-view-id>/shop/catalogue.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+    <converter>
+        <converter-for-class>java.lang.Enum</converter-for-class>
+        <converter-class>javax.faces.convert.EnumConverter</converter-class>
+    </converter>
+
+</faces-config>

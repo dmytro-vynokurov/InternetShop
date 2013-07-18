@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  User: Dmytro_Vynokurov
+  Date: 7/10/13
+  Time: 6:05 PM
+-->
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+        >
+
+<h:head>
+    <title>Facelets page</title>
+</h:head>
+<h:body>
+    <ui:composition template="/templates/admin_layout.xhtml">
+        <ui:define name="content">
+            <h:form>
+                <p:dataTable id="categories" var="category" value="#{categoryDTO.categoryModel}"
+                             selection="#{categoryDTO.selectedCategory}" selectionMode="single">
+
+                    <p:ajax event="rowSelect" listener="#{categoryDTO.viewCatalogue}"/>
+
+                    <f:facet name="header">
+                        Choose category
+                    </f:facet>
+
+                    <p:column headerText="Name">
+                        #{category.categoryName}
+                    </p:column>
+
+                </p:dataTable>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</h:body>
+
+</html>

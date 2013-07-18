@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  User: Dmytro_Vynokurov
+  Date: 7/9/13
+  Time: 4:03 PM
+-->
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+    <title>Admin page</title>
+</h:head>
+
+<h:body>
+    <div id="page">
+        <h:form id="menu">
+            <p:tabMenu activeIndex="#{admin.pageIndex}">
+                <p:menuitem value="Home" action="#{admin.setPageIndex(0)}"/>
+                <p:menuitem value="Categories" action="#{admin.setPageIndex(1)}"/>
+                <p:menuitem value="Items" action="#{admin.setPageIndex(2)}"/>
+                <p:menuitem value="Orders" action="#{admin.setPageIndex(3)}"/>
+            </p:tabMenu>
+        </h:form>
+
+        <div id="content">
+            <ui:insert name="content">
+                Default content
+            </ui:insert>
+        </div>
+
+        <div id="footer">
+            <ui:insert name="footer">
+                <ui:include src="/templates/footer.xhtml"/>
+            </ui:insert>
+        </div>
+
+    </div>
+</h:body>
+
+</html>

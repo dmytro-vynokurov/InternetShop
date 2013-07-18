@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  User: Dmytro_Vynokurov
+  Date: 7/9/13
+  Time: 4:24 PM
+-->
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+        >
+
+<h:body>
+    <ui:composition template="/templates/admin_layout.xhtml">
+        <ui:define name="content">
+            <p:panel>
+                <h:form id="form">
+                    <p:growl id="growl" sticky="true"/>
+
+                    <p:dataTable id="categories" var="category" value="#{categoryDTO.categoryModel}"
+                                 selection="#{categoryDTO.selectedCategory}" selectionMode="single">
+
+                        <p:column headerText="ID">
+                            #{category.idCategory}
+                        </p:column>
+
+                        <p:column headerText="Name">
+                            #{category.categoryName}
+                        </p:column>
+
+                        <p:column headerText="Parent category">
+                            #{category.parentCategory.categoryName}
+                        </p:column>
+
+                        <f:facet name="footer">
+                            <p:commandButton value="Add subcategory" actionListener="#{categoryDTO.addCategory}"
+                                             update=":form:growl"/>
+
+                            <p:commandButton value="Edit category" actionListener="#{categoryDTO.editCategory}"
+                                             update=":form:growl"/>
+
+                            <p:commandButton value="Delete category" type="submit"
+                                             actionListener="#{categoryDTO.deleteCategory}"
+                                             update=":form:growl">
+                            </p:commandButton>
+
+                            <p:commandButton value="View items" actionListener="#{itemDTO.viewItemsOfCategory}"
+                                             update=":form:growl"/>
+                        </f:facet>
+
+                    </p:dataTable>
+
+                </h:form>
+                <h:form id="confirm_delete_form">
+                    <p:confirmDialog id="confirm_delete"
+                                     widgetVar="confirm_delete"
+                                     message="Are you sure you want to delete category and all it's subcategories?"
+                                     global="true">
+                        <div align="center">
+                            <p:commandButton value="Yes"
+                                             type="submit"
+                                             styleClass="ui-confirmation-yes"
+                                             actionListener="#{categoryDTO.removeCategory}"/>
+                            <p:commandButton value="No"
+                                             type="button"
+                                             styleClass="ui-confirmation-no"
+                                             onclick="confirm_delete.hide();"/>
+                        </div>
+                    </p:confirmDialog>
+                </h:form>
+
+            </p:panel>
+        </ui:define>
+    </ui:composition>
+</h:body>
+
+</html>

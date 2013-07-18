@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  User: Dmytro_Vynokurov
+  Date: 7/9/13
+  Time: 4:24 PM
+-->
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+        >
+
+
+<h:body>
+    <ui:composition template="/templates/admin_layout.xhtml">
+        <ui:define name="content">
+            <p:panel>
+                <h:form id="form">
+                    <p:growl id="growl" sticky="true"/>
+
+                    <p:dataTable id="items" var="item" value="#{itemDTO.itemModel}"
+                                 selection="#{itemDTO.selectedItem}" selectionMode="single">
+
+                        <p:column headerText="ID">
+                            #{item.idItem}
+                        </p:column>
+                        <p:column headerText="Name">
+                            #{item.itemName}
+                        </p:column>
+                        <p:column headerText="Manufacturer">
+                            #{item.manufacturer}
+                        </p:column>
+                        <p:column headerText="Category">
+                            #{item.category.categoryName}
+                        </p:column>
+                        <p:column headerText="Quantity">
+                            #{item.quantity}
+                        </p:column>
+                        <p:column headerText="Color">
+                            #{item.color}
+                        </p:column>
+                        <p:column headerText="Price">
+                            #{item.price}
+                        </p:column>
+
+                        <f:facet name="footer" id="table_footer">
+                            <p:commandButton value="Add item" action="add_item"/>
+
+                            <p:commandButton value="View details" actionListener="#{itemDTO.editItem}"
+                                             update=":form:growl"/>
+
+                            <p:commandButton value="Show all items"
+                                             actionListener="#{itemDTO.showAll}"
+                                             rendered="#{!itemDTO.allItemsShown}"/>
+                        </f:facet>
+
+                    </p:dataTable>
+
+                </h:form>
+
+            </p:panel>
+        </ui:define>
+    </ui:composition>
+</h:body>
+
+</html>

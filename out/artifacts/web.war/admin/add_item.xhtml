@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  User: Dmitry
+  Date: 7/16/13
+  Time: 12:03 AM
+-->
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+        >
+
+<h:head>
+    <title>Simple JSF Facelets page</title>
+</h:head>
+
+<h:body>
+    <ui:composition template="/templates/admin_layout.xhtml">
+        <ui:define name="content">
+            <h:form id="form">
+                <p:growl id="growl" sticky="true"/>
+
+                <p:panelGrid columns="2" style="padding-left: 100px;padding-top: 40px">
+                    <h:outputLabel value="Category:"/>
+                    <p:selectOneMenu value="#{itemDTO.newCategory}"
+                                     converter="CategoryConverter"
+                                     panelStyle="width:150px"
+                                     effect="fade"
+                                     var="newCategory"
+                                     style="width:160px"
+                                     filter="true"
+                                     filterMatchMode="startsWith"
+                                     required="#{true}">
+                        <f:selectItem itemLabel="#{categoryDTO.selectedCategory.categoryName}"
+                                      itemValue="#{categoryDTO.selectedCategory}"/>
+                        <f:selectItems value="#{categoryDTO.categories}"
+                                       var="category"
+                                       itemLabel="#{category.categoryName}"
+                                       itemValue="#{category}"/>
+                        <p:column>
+                            #{newCategory.categoryName}
+                        </p:column>
+                        <f:converter converterId="CategoryConverter"/>
+                    </p:selectOneMenu>
+
+                    <h:outputLabel value="Item name:"/>
+                    <h:inputText value="#{itemDTO.newItemName}" required="true">
+                        <f:validator validatorId="NameValidator"/>
+                    </h:inputText>
+
+                    <h:outputLabel value="Manufacturer:"/>
+                    <h:inputText value="#{itemDTO.newManufacturer}">
+                        <f:validator validatorId="NameValidator"/>
+                    </h:inputText>
+
+                    <h:outputLabel value="Description:"/>
+                    <h:inputTextarea value="#{itemDTO.newDescription}"/>
+
+                    <h:outputLabel value="Quantity:"/>
+                    <h:inputText value="#{itemDTO.newQuantity}" required="true">
+                        <f:convertNumber integerOnly="#{true}"/>
+                    </h:inputText>
+
+                    <h:outputLabel value="Price:"/>
+                    <h:inputText value="#{itemDTO.newPrice}" required="true">
+                        <f:convertNumber maxFractionDigits="2"/>
+                    </h:inputText>
+
+                    <h:outputLabel value="Length, mm:"/>
+                    <h:inputText value="#{itemDTO.newLength}">
+                        <f:convertNumber integerOnly="#{true}"/>
+                    </h:inputText>
+
+                    <h:outputLabel value="Width, mm:"/>
+                    <h:inputText value="#{itemDTO.newWidth}">
+                        <f:convertNumber integerOnly="#{true}"/>
+                    </h:inputText>
+
+                    <h:outputLabel value="Height, mm:"/>
+                    <h:inputText value="#{itemDTO.newHeight}">
+                        <f:convertNumber integerOnly="#{true}"/>
+                    </h:inputText>
+
+                    <h:outputLabel value="Weight, g:"/>
+                    <h:inputText value="#{itemDTO.newWeight}">
+                        <f:convertNumber integerOnly="#{true}"/>
+                    </h:inputText>
+
+                    <h:outputLabel value="Color:"/>
+                    <h:selectOneMenu id="color" value="#{itemDTO.newColor}">
+                        <f:selectItems value="#{itemDTO.colors}"/>
+                    </h:selectOneMenu>
+
+
+                    <p:commandButton value="Submit" action="#{itemDTO.createItem()}"
+                                     update=":form:growl" id="submit"/>
+                    <p:commandButton value="Cancel" action="items" id="cancel" immediate="true"/>
+                </p:panelGrid>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</h:body>
+
+</html>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  User: Dmitry
+  Date: 7/14/13
+  Time: 1:57 PM
+-->
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+        >
+
+<h:head>
+    <title>Simple JSF Facelets page</title>
+</h:head>
+
+<h:body>
+    <ui:composition template="/templates/admin_layout.xhtml">
+        <ui:define name="content">
+            <h:form id="form">
+                <p:growl id="growl" sticky="true"/>
+                <p:panelGrid columns="2">
+                    <p:panelGrid columns="2" style="padding-left: 100px;padding-top: 40px">
+                        <h:outputText value="Category name"/>
+                        <h:inputText value="#{categoryDTO.selectedCategory.categoryName}" required="true">
+                            <f:validator validatorId="NameValidator"/>
+                        </h:inputText>
+                        <h:outputText value="Parent category"/>
+                        <h:selectOneMenu value="#{categoryDTO.parentCategory}"
+                                         converter="CategoryConverter"
+                                         panelStyle="width:150px"
+                                         effect="fade"
+                                         var="parentCategory"
+                                         style="width:160px"
+                                         filter="true"
+                                         filterMatchMode="startsWith">
+                            <f:selectItem itemLabel="#{categoryDTO.selectedCategory.parentCategory.categoryName}"
+                                          itemValue="#{categoryDTO.selectedCategory.parentCategory}"/>
+                            <f:selectItems value="#{categoryDTO.categories}"
+                                           var="category"
+                                           itemLabel="#{category.categoryName}"
+                                           itemValue="#{category}"/>
+
+                            <p:column>
+                                #{parentCategory.categoryName}
+                            </p:column>
+                            <f:converter converterId="CategoryConverter"/>
+                        </h:selectOneMenu>
+
+
+                    </p:panelGrid>
+
+                    <p:dataTable id="characteristic_types"
+                                 var="characteristic"
+                                 value="#{characteristicTypeDTO.characteristicTypeModel}"
+                                 selection="#{characteristicTypeDTO.selectedCharacteristicType}"
+                                 selectionMode="single"
+                                 widgetVar="characteristic_types"
+                                 editable="true"
+                                 editMode="cell">
+                        <f:facet name="header">
+                            Characteristic types
+                        </f:facet>
+
+                        <p:ajax event="cellEdit" listener="#{characteristicTypeDTO.updateCharacteristicType}"/>
+
+                        <p:column headerText="ID">
+                            #{characteristic.idCharacteristicType}
+                        </p:column>
+
+                        <p:column headerText="Name">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{characteristic.characteristicTypeName}"/>
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{characteristic.characteristicTypeName}"
+                                                 onselect="#{characteristicTypeDTO.setSelectedCharacteristicType(characteristic)}"
+                                                 style="width:100%"
+                                                 label="Name"/>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <f:facet name="footer">
+                            <p:commandButton value="Add"
+                                             actionListener="#{characteristicTypeDTO.addCharacteristicType}"/>
+
+                            <p:commandButton value="Delete"
+                                             actionListener="#{characteristicTypeDTO.deleteCharacteristicType}"/>
+                        </f:facet>
+
+                    </p:dataTable>
+
+                    <p:commandButton value="Submit" action="#{categoryDTO.updateCategory()}"
+                                     update=":form:growl" id="submit"/>
+                    <p:commandButton value="Cancel" action="categories" id="cancel" immediate="true"/>
+                </p:panelGrid>
+
+            </h:form>
+
+            <h:form id="confirm_delete_form">
+                <p:confirmDialog id="confirm_delete_CT"
+                                 widgetVar="confirm_delete_CT"
+                                 message="Are you sure you want to delete characteristic type and all characteristics related to it?"
+                                 global="true">
+                    <div align="center">
+                        <p:commandButton value="Yes"
+                                         type="submit"
+                                         styleClass="ui-confirmation-yes"
+                                         actionListener="#{characteristicTypeDTO.removeCharacteristicType}"/>
+                        <p:commandButton value="No"
+                                         type="button"
+                                         styleClass="ui-confirmation-no"
+                                         onclick="confirm_delete_CT.hide();"/>
+                    </div>
+                </p:confirmDialog>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</h:body>
+
+</html>

@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  User: Dmitry
+  Date: 7/16/13
+  Time: 12:03 AM
+-->
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+        >
+
+<h:head>
+    <title>Simple JSF Facelets page</title>
+</h:head>
+
+<h:body>
+    <ui:composition template="/templates/admin_layout.xhtml">
+        <ui:define name="content">
+            <p:panelGrid columns="4">
+                <h:form id="form">
+                    <p:growl id="growl" sticky="true"/>
+
+                    <p:panelGrid columns="2" style="padding-left: 100px;padding-top: 40px">
+                        <h:outputLabel value="Category:"/>
+                        <p:selectOneMenu value="#{itemDTO.selectedItem.category}"
+                                         converter="CategoryConverter"
+                                         panelStyle="width:150px"
+                                         effect="fade"
+                                         var="newCategory"
+                                         style="width:160px"
+                                         filter="true"
+                                         filterMatchMode="startsWith" required="#{true}">
+                            <f:selectItem itemLabel="#{itemDTO.selectedItem.category.categoryName}"
+                                          itemValue="#{itemDTO.selectedItem.category}"/>
+                            <f:selectItems value="#{categoryDTO.categories}"
+                                           var="category"
+                                           itemLabel="#{category.categoryName}"
+                                           itemValue="#{category}"/>
+                            <p:column>
+                                #{newCategory.categoryName}
+                            </p:column>
+                            <f:converter converterId="CategoryConverter"/>
+                        </p:selectOneMenu>
+
+                        <h:outputLabel value="Item name:"/>
+                        <h:inputText value="#{itemDTO.selectedItem.itemName}" required="true">
+                            <f:validator validatorId="NameValidator"/>
+                        </h:inputText>
+
+                        <h:outputLabel value="Manufacturer:"/>
+                        <h:inputText value="#{itemDTO.selectedItem.manufacturer}">
+                            <f:validator validatorId="NameValidator"/>
+                        </h:inputText>
+
+                        <h:outputLabel value="Description:"/>
+                        <h:inputTextarea value="#{itemDTO.selectedItem.description}"/>
+
+                        <h:outputLabel value="Quantity:"/>
+                        <h:inputText value="#{itemDTO.selectedItem.quantity}" required="true">
+                            <f:convertNumber integerOnly="#{true}"/>
+                        </h:inputText>
+
+                        <h:outputLabel value="Price:"/>
+                        <h:inputText value="#{itemDTO.selectedItem.price}" required="true">
+                            <f:convertNumber maxFractionDigits="2"/>
+                        </h:inputText>
+
+                        <h:outputLabel value="Length, mm:"/>
+                        <h:inputText value="#{itemDTO.selectedItem.length}">
+                            <f:convertNumber integerOnly="#{true}"/>
+                        </h:inputText>
+
+                        <h:outputLabel value="Width, mm:"/>
+                        <h:inputText value="#{itemDTO.selectedItem.width}">
+                            <f:convertNumber integerOnly="#{true}"/>
+                        </h:inputText>
+
+                        <h:outputLabel value="Height, mm:"/>
+                        <h:inputText value="#{itemDTO.selectedItem.height}">
+                            <f:convertNumber integerOnly="#{true}"/>
+                        </h:inputText>
+
+                        <h:outputLabel value="Weight, g:"/>
+                        <h:inputText value="#{itemDTO.selectedItem.weight}">
+                            <f:convertNumber integerOnly="#{true}"/>
+                        </h:inputText>
+
+                        <h:outputLabel value="Color:"/>
+                        <h:selectOneMenu id="color" value="#{itemDTO.selectedItem.color}">
+                            <f:selectItems value="#{itemDTO.colors}"/>
+                        </h:selectOneMenu>
+                        <p:commandButton value="Save changes" action="#{itemDTO.updateItem()}"
+                                         update=":form:growl" id="submit"/>
+                        <p:commandButton value="Cancel" action="items" id="cancel" immediate="true"/>
+                    </p:panelGrid>
+                </h:form>
+
+                <p:dataTable id="characteristics"
+                             var="characteristic"
+                             value="#{characteristicDTO.characteristicModel}"
+                             selection="#{characteristicDTO.selectedCharacteristic}"
+                             selectionMode="single"
+                             widgetVar="characteristics"
+                             editable="true"
+                             editMode="cell">
+                    <f:facet name="header">
+                        Characteristics
+                    </f:facet>
+                    <p:ajax event="cellEdit" listener="#{characteristicDTO.updateCharacteristic}"/>
+                    <p:column headerText="ID">
+                        #{characteristic.idCharacteristic}
+                    </p:column>
+                    <p:column headerText="Value">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{characteristic.value}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputText value="#{characteristic.value}"
+                                             style="width:100%"
+                                             label="Value"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column headerText="Measure">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{characteristic.measure}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputText value="#{characteristic.measure}"
+                                             style="width:100%"
+                                             label="Measure"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column headerText="Description">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{characteristic.description}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputText value="#{characteristic.description}"
+                                             style="width:100%"
+                                             label="Description"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                </p:dataTable>
+                <h:form id="form_video">
+
+                    <p:dataTable id="characteristic_types"
+                                 var="characteristic"
+                                 value="#{characteristicTypeDTO.characteristicTypeModel}"
+                                 selection="#{characteristicTypeDTO.selectedCharacteristicType}"
+                                 selectionMode="single"
+                                 widgetVar="characteristic_types"
+                                 editable="true"
+                                 editMode="cell">
+                        <f:facet name="header">
+                            Characteristic types
+                        </f:facet>
+
+                        <p:ajax event="cellEdit" listener="#{characteristicTypeDTO.updateCharacteristicType}"/>
+
+                        <p:column headerText="ID">
+                            #{characteristic.idCharacteristicType}
+                        </p:column>
+
+                        <p:column headerText="Name">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{characteristic.characteristicTypeName}"/>
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{characteristic.characteristicTypeName}"
+                                                 onselect="#{characteristicTypeDTO.setSelectedCharacteristicType(characteristic)}"
+                                                 style="width:100%"
+                                                 label="Name"/>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <f:facet name="footer">
+                            <p:commandButton value="Add"
+                                             actionListener="#{characteristicTypeDTO.addCharacteristicType}"/>
+
+                            <p:commandButton value="Delete"
+                                             actionListener="#{characteristicTypeDTO.deleteCharacteristicType}"/>
+                        </f:facet>
+
+                    </p:dataTable>
+                </h:form>
+
+            </p:panelGrid>
+        </ui:define>
+    </ui:composition>
+</h:body>
+
+</html>
