@@ -40,12 +40,30 @@
     <navigation-rule>
         <from-view-id>/*</from-view-id>
         <navigation-case>
+            <from-outcome>index</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>/shop/*</from-view-id>
+        <navigation-case>
+            <from-outcome>item</from-outcome>
+            <to-view-id>/shop/item.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>cart</from-outcome>
+            <to-view-id>/shop/cart.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>register_order</from-outcome>
+            <to-view-id>/shop/register_order.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
             <from-outcome>catalogue</from-outcome>
             <to-view-id>/shop/catalogue.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
-
-<!--todo finish navigation rules here-->
 
     <converter>
         <converter-for-class>java.lang.Enum</converter-for-class>

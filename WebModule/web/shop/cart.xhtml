@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  User: Dmitry
+  Date: 7/19/13
+  Time: 4:23 AM
+-->
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+        >
+
+<h:head>
+    <title>Simple JSF Facelets page</title>
+</h:head>
+
+<h:body>
+    <ui:composition template="/templates/common_layout.xhtml">
+        <ui:define name="content">
+            <h:form id="form">
+                <h2>Cart</h2>
+                <p:dataTable value="#{cartDTO.cartModel}" var="entry" selectionMode="single"
+                             selection="#{cartDTO.selectedEntry}" id="entries">
+                    <p:column headerText="Item">
+                        #{entry.item}
+                    </p:column>
+
+                    <p:column headerText="Quantity">
+                        <p:spinner value="#{entry.quantity}" min="0" max="#{entry.item.quantity}"/>
+                    </p:column>
+
+                    <p:column headerText="Price">
+                        #{entry.item.price}
+                    </p:column>
+
+                    <p:column headerText="Total">
+                        #{entry.quantity*entry.item.price}
+                    </p:column>
+                </p:dataTable>
+
+                <div align="right">
+                    <h3>Total: #{cartDTO.totalPrice}</h3>
+                </div>
+
+                <p:commandButton value="Confirm order" action="register_order"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</h:body>
+
+</html>

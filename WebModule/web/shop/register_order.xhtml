@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  User: Dmitry
+  Date: 7/19/13
+  Time: 4:24 AM
+-->
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+        >
+
+<h:head>
+    <title>Simple JSF Facelets page</title>
+</h:head>
+
+<h:body>
+    <ui:composition template="/templates/common_layout.xhtml">
+        <ui:define name="content">
+            <h:form id="form">
+                <p:panelGrid columns="2">
+                    <h:outputText value="Payment type:"/>
+                    <h:selectOneMenu value="#{cartDTO.currentOrder.paymentType}">
+                        <f:selectItems value="#{cartDTO.paymentTypes}"/>
+                    </h:selectOneMenu>
+
+                    <h:outputText value="Delivery type:"/>
+                    <h:selectOneMenu value="#{cartDTO.currentOrder.deliveryType}">
+                        <f:selectItems value="#{cartDTO.deliveryTypes}"/>
+                    </h:selectOneMenu>
+
+                    <h:outputText value="Your name:"/>
+                    <h:inputText value="#{cartDTO.currentOrder.userName}"/>
+
+                    <h:outputText value="Phone:"/>
+                    <h:inputText value="#{cartDTO.currentOrder.userPhone}" required="true"/>
+
+                    <h:outputText value="Email:"/>
+                    <h:inputText value="#{cartDTO.currentOrder.userEmail}">
+                        <f:validator validatorId="EmailValidator"/>
+                    </h:inputText>
+
+                    <h:inputText value="Comment"/>
+                    <h:inputTextarea value="#{cartDTO.currentOrder.comment}"/>
+
+                    <p:commandButton value="Confirm order" action="#{cartDTO.registerOrder}"/>
+                </p:panelGrid>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</h:body>
+
+</html>

@@ -1,4 +1,4 @@
-package dto.service;
+package dto.validators;
 
 import dto.category.CategoryConverter;
 

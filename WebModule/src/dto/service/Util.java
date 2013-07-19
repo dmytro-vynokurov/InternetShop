@@ -10,6 +10,7 @@ import java.io.IOException;
  * Time: 2:02 AM
  */
 public class Util {
+    public static final String INDEX_PAGE = "index";
 
     public static void navigateTo(String page) throws IOException {
         FacesContext.getCurrentInstance().getExternalContext().redirect(page + ".xhtml");

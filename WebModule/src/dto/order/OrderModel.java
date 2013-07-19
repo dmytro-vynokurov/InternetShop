@@ -28,7 +28,9 @@ public class OrderModel extends LazyDataModel<Order> {
 
     @Override
     public List<Order> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, String> filters) {
-        orderDAO
-        return super.load(first, pageSize, sortField, sortOrder, filters);
+        if(sortField!="sum") return orderDAO.findAll();
+
+        boolean descending=(sortOrder==SortOrder.DESCENDING);
+        return orderDAO.findSortedBySumInRange(first,first+pageSize,descending);
     }
 }

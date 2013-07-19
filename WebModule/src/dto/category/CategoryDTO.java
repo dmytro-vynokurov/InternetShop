@@ -25,13 +25,6 @@ import static dto.service.Util.navigateTo;
 @SessionScoped
 public class CategoryDTO implements Serializable {
 
-    private static final String NOT_CHOSEN_ADD_SUBCATEGORY ="Choose parent category first";
-    private static final String NOT_CHOSEN_EDIT_CATEGORY = "Choose category to edit";
-    private static final String NOT_CHOSEN_DELETE_CATEGORY = "Choose category to delete";
-    private static final String CANNOT_DELETE_DEFAULT = "Cannot delete default category";
-    private static final String DEFAULT_CANNOT_HAVE_PARENT = "Default category cannot have parent category";
-    private static final String CANNOT_REFERENCE_ITSELF = "Parent category cannot reference to itself";
-
     @EJB
     private CategoryDAO categoryDAO;
     private Category selectedCategory;
@@ -45,7 +38,7 @@ public class CategoryDTO implements Serializable {
             parentCategory = selectedCategory;
             navigateTo(ADD_CATEGORY_PAGE);
         } else {
-            createMessage(NOT_CHOSEN_ADD_SUBCATEGORY);
+            createMessage("Choose parent category first");
         }
     }
 
@@ -54,18 +47,18 @@ public class CategoryDTO implements Serializable {
         if (selectedCategory != null) {
             navigateTo(EDIT_CATEGORY_PAGE);
         } else {
-            createMessage(NOT_CHOSEN_EDIT_CATEGORY);
+            createMessage("Choose category to edit");
         }
     }
 
     @RolesAllowed("ADMIN")
     public void deleteCategory() {
         if (categoryDAO.isDefaultCategory(selectedCategory)) {
-            createMessage(CANNOT_DELETE_DEFAULT);
+            createMessage("Cannot delete default category");
         } else if (selectedCategory != null) {
             RequestContext.getCurrentInstance().execute("confirm_delete.show();");
         } else {
-            createMessage(NOT_CHOSEN_DELETE_CATEGORY);
+            createMessage("Choose category to delete");
         }
     }
 
@@ -82,9 +75,9 @@ public class CategoryDTO implements Serializable {
     public void updateCategory() throws IOException {
         if (categoryDAO.isDefaultCategory(selectedCategory) && parentCategory != null) {
             parentCategory = null;
-            createMessage(DEFAULT_CANNOT_HAVE_PARENT);
+            createMessage("Default category cannot have parent category");
         } else if (haveSameId(selectedCategory, parentCategory)) {
-            createMessage(CANNOT_REFERENCE_ITSELF);
+            createMessage("Parent category cannot reference to itself");
         } else if (categoryDAO.isAncestor(selectedCategory, parentCategory)) {
             createMessage("Chosen parent category(" +
                     parentCategory.getCategoryName() +
