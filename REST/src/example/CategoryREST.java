@@ -5,10 +5,11 @@ import entities.Category;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
 import java.util.List;
 
 /**
@@ -19,22 +20,26 @@ import java.util.List;
 @Stateless
 @Path("/categoryREST")
 public class CategoryREST {
+    private static final String CATEGORY_DAO_LOOKUP_PATH="java:global/rest/CategoryDAO";
 
     @EJB
     CategoryDAO categoryDAO;
 
     @GET
-    @Produces({MediaType.APPLICATION_JSON})
-    public String getClichedMessage() {
+    @Produces("text/html")
+    public String getClichedMessage() throws NamingException {
+        categoryDAO = (CategoryDAO) new InitialContext().lookup(CATEGORY_DAO_LOOKUP_PATH);
         List<Category> categories = categoryDAO.findAll();
         StringBuilder result = new StringBuilder();
+        boolean isFirst = true;
 
-        result.append("{categories:[");
+        result.append("{\"categories\":[");
         for (Category category : categories) {
-            result.append("{id:").append(category.getIdCategory()).append(",");
-            result.append("name:").append(category.getCategoryName()).append(",");
-            result.append("parentId:").append(category.getParentCategory().getIdCategory());
-            result.append("}");
+            if (!isFirst) result.append(",");
+            isFirst = false;
+            result.append("{\"id\":\"").append(category.getIdCategory()).append("\",");
+            result.append("\"name\":\"").append(category.getCategoryName());
+            result.append("\"}");
         }
         result.append("]}");
 

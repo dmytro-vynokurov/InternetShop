@@ -25,7 +25,7 @@ public class OrderDTO implements Serializable {
     Order selectedOrder;
 
 
-    public void registerOrder(){
+    public void registerOrder() {
         orderDAO.create(selectedOrder);
     }
 

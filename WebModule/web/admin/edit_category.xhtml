@@ -105,10 +105,10 @@
             </h:form>
 
             <h:form id="confirm_delete_form">
-                <p:confirmDialog id="confirm_delete_CT"
-                                 widgetVar="confirm_delete_CT"
-                                 message="Are you sure you want to delete characteristic type and all characteristics related to it?"
-                                 global="true">
+                <p:dialog id="confirm_delete_CT"
+                          widgetVar="confirmDialog"
+                          message="Are you sure you want to delete characteristic type and all characteristics related to it?"
+                          global="true">
                     <div align="center">
                         <p:commandButton value="Yes"
                                          type="submit"
@@ -117,9 +117,9 @@
                         <p:commandButton value="No"
                                          type="button"
                                          styleClass="ui-confirmation-no"
-                                         onclick="confirm_delete_CT.hide();"/>
+                                         onclick="PF('confirmDialog').hide();"/>
                     </div>
-                </p:confirmDialog>
+                </p:dialog>
             </h:form>
         </ui:define>
     </ui:composition>

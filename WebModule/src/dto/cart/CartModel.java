@@ -1,6 +1,5 @@
 package dto.cart;
 
-import entities.Category;
 import entities.ItemOrder;
 import org.primefaces.model.SelectableDataModel;
 
@@ -20,6 +19,7 @@ public class CartModel extends ListDataModel<ItemOrder> implements SelectableDat
     public CartModel(List<ItemOrder> data) {
         super(data);
     }
+
     @Override
     public Object getRowKey(ItemOrder entry) {
         return makeKey(entry);
@@ -35,8 +35,8 @@ public class CartModel extends ListDataModel<ItemOrder> implements SelectableDat
         return null;
     }
 
-    private String makeKey(ItemOrder entry){
-               return ""+entry.getItem().getIdItem()+
-                       "/"+entry.getOrder().getIdOrder();
+    private String makeKey(ItemOrder entry) {
+        return "" + entry.getItem().getIdItem() +
+                "/" + entry.getOrder().getIdOrder();
     }
 }

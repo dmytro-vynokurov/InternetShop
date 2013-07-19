@@ -20,13 +20,14 @@
     <title>Facelets page</title>
 </h:head>
 <h:body>
-    <ui:composition template="/templates/admin_layout.xhtml">
+    <ui:composition template="/templates/common_layout.xhtml">
         <ui:define name="content">
-            <h:form>
-                <p:dataTable id="categories" var="category" value="#{categoryDTO.categoryModel}"
-                             selection="#{categoryDTO.selectedCategory}" selectionMode="single">
 
-                    <p:ajax event="rowSelect" listener="#{categoryDTO.viewCatalogue}"/>
+            <h:form id="form_index_categories">
+                <p:dataTable id="index_categories" var="category" value="#{catalogueDTO.categoryModel}"
+                             selection="#{catalogueDTO.selectedCategory}" selectionMode="single">
+
+                    <p:ajax event="rowSelect" listener="#{catalogueDTO.viewItems}"/>
 
                     <f:facet name="header">
                         Choose category

@@ -17,7 +17,7 @@ import javax.faces.model.SelectItem;
  * Date: 7/19/13
  * Time: 8:25 AM
  */
-@ManagedBean(name="cartDTO")
+@ManagedBean(name = "cartDTO")
 @SessionScoped
 public class CartDTO {
 
@@ -26,12 +26,12 @@ public class CartDTO {
     Order currentOrder;
     ItemOrder selectedEntry;
 
-    public void addItem(Item item){
+    public void addItem(Item item) {
         ItemOrder entry = findEntry(item);
-        if(entry!=null){
-            entry.setQuantity(entry.getQuantity()+1);
-        }else{
-            entry=new ItemOrder();
+        if (entry != null) {
+            entry.setQuantity(entry.getQuantity() + 1);
+        } else {
+            entry = new ItemOrder();
             entry.setItem(item);
             entry.setOrder(currentOrder);
             entry.setQuantity(1);
@@ -39,26 +39,26 @@ public class CartDTO {
         }
     }
 
-    private ItemOrder findEntry(Item item){
+    private ItemOrder findEntry(Item item) {
         for (ItemOrder entry : currentOrder.getItemOrders()) {
-            if(item.equals(entry.getItem()))return entry;
+            if (item.equals(entry.getItem())) return entry;
         }
         return null;
     }
 
-    public void registerOrder(){
+    public void registerOrder() {
         orderDAO.create(currentOrder);
     }
 
-    public double getTotalPrice(){
-        double sum=0;
+    public double getTotalPrice() {
+        double sum = 0;
         for (ItemOrder entry : currentOrder.getItemOrders()) {
-            sum+=entry.getQuantity()*entry.getItem().getPrice();
+            sum += entry.getQuantity() * entry.getItem().getPrice();
         }
         return sum;
     }
 
-    public CartModel getCartModel(){
+    public CartModel getCartModel() {
         return new CartModel(currentOrder.getItemOrders());
     }
 

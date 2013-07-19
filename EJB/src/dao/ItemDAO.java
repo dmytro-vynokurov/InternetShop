@@ -15,7 +15,7 @@ import java.util.List;
 @Stateless
 public class ItemDAO extends GenericDAO<Item> {
 
-    public List<Item> findItemsOfCategory(final Category category) {
+    public List<Item> findPhotosOfItem(final Category category) {
         return executeQuery(new QueryBuilder() {
             @Override
             public TypedQuery<Item> buildQuery() {

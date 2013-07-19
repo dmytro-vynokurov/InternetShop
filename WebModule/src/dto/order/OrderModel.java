@@ -17,20 +17,20 @@ import java.util.Map;
  * Time: 2:26 AM
  */
 public class OrderModel extends LazyDataModel<Order> {
-    private static final String ORDER_DAO_CONTEXT_PATH="java:global/web/orderDAO";
+    private static final String ORDER_DAO_CONTEXT_PATH = "java:global/web/orderDAO";
 
     OrderDAO orderDAO;
 
     @PostConstruct
     public void initialize() throws NamingException {
-        orderDAO=(OrderDAO)new InitialContext().lookup(ORDER_DAO_CONTEXT_PATH);
+        orderDAO = (OrderDAO) new InitialContext().lookup(ORDER_DAO_CONTEXT_PATH);
     }
 
     @Override
     public List<Order> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, String> filters) {
-        if(sortField!="sum") return orderDAO.findAll();
+        if (sortField != "sum") return orderDAO.findAll();
 
-        boolean descending=(sortOrder==SortOrder.DESCENDING);
-        return orderDAO.findSortedBySumInRange(first,first+pageSize,descending);
+        boolean descending = (sortOrder == SortOrder.DESCENDING);
+        return orderDAO.findSortedBySumWaitingForProcessingInRange(first, first + pageSize, descending);
     }
 }

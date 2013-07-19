@@ -57,7 +57,7 @@ public class CharacteristicTypeDTO implements Serializable {
     @RolesAllowed("ADMIN")
     public void deleteCharacteristicType() {
         if (selectedCharacteristicType != null) {
-            RequestContext.getCurrentInstance().execute("confirm_delete_CT.show();");
+            RequestContext.getCurrentInstance().execute("PF('confirmDialog').show();");
         } else {
             createMessage("Choose characteristic type first");
         }
@@ -72,7 +72,6 @@ public class CharacteristicTypeDTO implements Serializable {
 
     @RolesAllowed("ADMIN")
     public void updateCharacteristicType(CellEditEvent event) throws IOException {
-        System.out.println("Selected:\t" + selectedCharacteristicType);
         characteristicTypeDAO.update(selectedCharacteristicType);
         initializeDataModel();
         navigateTo(EDIT_CATEGORY_PAGE);

@@ -18,7 +18,7 @@ import javax.naming.NamingException;
 @FacesConverter(value = "CategoryConverter", forClass = entities.Category.class)
 public class CategoryConverter implements Converter {
     public static final String SPLITTER = "\u2622";
-    private static final String CATEGORY_DAO_CONTEXT_PATH="java:global/web/CategoryDAO";
+    private static final String CATEGORY_DAO_CONTEXT_PATH = "java:global/web/CategoryDAO";
 
     CategoryDAO categoryDAO;
 

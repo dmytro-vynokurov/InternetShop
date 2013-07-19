@@ -26,7 +26,7 @@ public final class Item implements Serializable {
     @Basic
     private String manufacturer;
     @Column(name = "DESCRIPTION", nullable = true, insertable = true, updatable = true, length = 4000, precision = 0)
-    @Basic(fetch = FetchType.LAZY)
+    @Basic(fetch = FetchType.EAGER)
     @Lob
     private String description;
     @Column(name = "QUANTITY", nullable = false, insertable = true, updatable = true, length = 22, precision = 0)

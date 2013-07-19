@@ -111,7 +111,6 @@ public class CharacteristicDTO implements Serializable {
 
     @RolesAllowed("ADMIN")
     public void updateCharacteristic(CellEditEvent event) throws IOException {
-        System.out.println("Selected:\t" + selectedCharacteristic);
         characteristicDAO.update(selectedCharacteristic);
         initializeDataModel();
         navigateTo(EDIT_CATEGORY_PAGE);

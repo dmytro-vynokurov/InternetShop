@@ -1,8 +1,8 @@
 package dto.item;
 
 import dao.ItemDAO;
-import dto.category.CategoryDTO;
 import dto.Admin;
+import dto.category.CategoryDTO;
 import dto.service.NavigationShop;
 import entities.Category;
 import entities.Item;
@@ -114,7 +114,7 @@ public class ItemDTO implements Serializable {
 
     public void viewItemsOfCategory() throws IOException {
         if (categoryDTO.getSelectedCategory() != null) {
-            itemModel = new ItemModel(itemDAO.findItemsOfCategory(categoryDTO.getSelectedCategory()));
+            itemModel = new ItemModel(itemDAO.findPhotosOfItem(categoryDTO.getSelectedCategory()));
             allItemsShown = false;
             admin.setPageIndex(Admin.ITEMS_INDEX);
             navigateTo(ITEMS_PAGE);
@@ -124,8 +124,7 @@ public class ItemDTO implements Serializable {
     }
 
     public void viewCatalogue() throws IOException {
-        System.out.println("In view catalogue");
-        itemModel = new ItemModel((itemDAO.findItemsOfCategory(categoryDTO.getSelectedCategory())));
+        itemModel = new ItemModel((itemDAO.findPhotosOfItem(categoryDTO.getSelectedCategory())));
         navigateTo(NavigationShop.CATALOGUE_PAGE);
     }
 

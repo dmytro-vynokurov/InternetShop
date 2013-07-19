@@ -2,7 +2,6 @@ package dao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 import javax.persistence.Query;
 import java.util.List;
 
@@ -21,7 +20,6 @@ public abstract class GenericDAO<T> {
     }
 
     public T update(T element) {
-        System.out.println("Tying to merge " + element);
         T result = null;
         result = em.merge(element);
         return result;
@@ -49,7 +47,7 @@ public abstract class GenericDAO<T> {
     protected List<T> executeQuery(QueryBuilder<T> queryBuilder) {
         List<T> result;
         Query query = queryBuilder.buildQuery();
-        result = (List<T>)query.getResultList();
+        result = (List<T>) query.getResultList();
         return result;
     }
 
