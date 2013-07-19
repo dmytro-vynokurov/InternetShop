@@ -1,8 +1,8 @@
-package dto.admin.characteristic;
+package dto.characteristic;
 
 import dao.CharacteristicDAO;
 import dao.CharacteristicTypeDAO;
-import dto.admin.item.ItemDTO;
+import dto.item.ItemDTO;
 import entities.Characteristic;
 import entities.CharacteristicType;
 import org.primefaces.context.RequestContext;
@@ -18,7 +18,9 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
-import static dto.admin.Navigation.*;
+import static dto.service.NavigationAdmin.EDIT_CATEGORY_PAGE;
+import static dto.service.Util.createMessage;
+import static dto.service.Util.navigateTo;
 
 /**
  * User: Dmitry

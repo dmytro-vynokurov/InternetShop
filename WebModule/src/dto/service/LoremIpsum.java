@@ -1,4 +1,4 @@
-package dto.admin;
+package dto.service;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;

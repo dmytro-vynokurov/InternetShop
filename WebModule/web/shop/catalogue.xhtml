@@ -10,9 +10,9 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
         >
-
 <h:head>
     <title>My shop</title>
 </h:head>
@@ -20,10 +20,24 @@
 <h:body>
     <ui:composition template="/templates/common_layout.xhtml">
         <ui:define name="content">
-            <h1>Catalogue</h1>
+            <h2>Catalogue</h2>
+            <h:form id="form">
+                <p:dataTable id="categoriesList" var="category" value="#{categoryDTO.categoryModel}"
+                             selection="#{categoryDTO.selectedCategory}" selectionMode="single">
 
-            <h3>But now there is some boilerplate</h3>
-            #{loremIpsum.text}
+                    <p:ajax event="rowSelect" listener="#{categoryDTO.view}"
+
+                    <f:facet name="header>">
+                        Choose category
+                    </f:facet>
+
+                    <p:column>
+                        #{category.categoryName}
+                    </p:column>
+
+                </p:dataTable>
+
+            </h:form>
         </ui:define>
     </ui:composition>
 </h:body>

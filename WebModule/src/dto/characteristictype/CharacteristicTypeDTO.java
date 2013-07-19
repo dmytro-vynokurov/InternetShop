@@ -1,7 +1,7 @@
-package dto.admin.characteristictype;
+package dto.characteristictype;
 
 import dao.CharacteristicTypeDAO;
-import dto.admin.category.CategoryDTO;
+import dto.category.CategoryDTO;
 import entities.CharacteristicType;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.CellEditEvent;
@@ -15,7 +15,9 @@ import javax.faces.bean.ViewScoped;
 import java.io.IOException;
 import java.io.Serializable;
 
-import static dto.admin.Navigation.*;
+import static dto.service.NavigationAdmin.EDIT_CATEGORY_PAGE;
+import static dto.service.Util.createMessage;
+import static dto.service.Util.navigateTo;
 
 
 /**

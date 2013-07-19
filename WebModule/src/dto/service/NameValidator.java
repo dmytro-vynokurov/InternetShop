@@ -1,6 +1,6 @@
-package dto.admin;
+package dto.service;
 
-import dto.admin.category.CategoryConverter;
+import dto.category.CategoryConverter;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;

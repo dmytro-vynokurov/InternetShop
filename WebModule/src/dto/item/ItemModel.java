@@ -1,4 +1,4 @@
-package dto.admin.item;
+package dto.item;
 
 import entities.Item;
 import org.primefaces.model.SelectableDataModel;

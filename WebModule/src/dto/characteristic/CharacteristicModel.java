@@ -1,4 +1,4 @@
-package dto.admin.characteristic;
+package dto.characteristic;
 
 import entities.Characteristic;
 import org.primefaces.model.SelectableDataModel;

@@ -1,4 +1,4 @@
-package dto.admin.category;
+package dto.category;
 
 import entities.Category;
 import org.primefaces.model.SelectableDataModel;

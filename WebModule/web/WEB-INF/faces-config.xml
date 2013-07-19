@@ -27,12 +27,10 @@
             <to-view-id>/admin/orders.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
-
         <navigation-case>
             <from-outcome>add_category</from-outcome>
             <to-view-id>/admin/add_category.xhtml</to-view-id>
         </navigation-case>
-
         <navigation-case>
             <from-outcome>add_item</from-outcome>
             <to-view-id>/admin/add_item.xhtml</to-view-id>
@@ -40,11 +38,14 @@
     </navigation-rule>
 
     <navigation-rule>
+        <from-view-id>/*</from-view-id>
         <navigation-case>
             <from-outcome>catalogue</from-outcome>
             <to-view-id>/shop/catalogue.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
+
+<!--todo finish navigation rules here-->
 
     <converter>
         <converter-for-class>java.lang.Enum</converter-for-class>

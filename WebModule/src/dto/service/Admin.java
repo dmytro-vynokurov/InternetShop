@@ -1,4 +1,4 @@
-package dto.admin;
+package dto.service;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -23,15 +23,15 @@ public class Admin implements Serializable {
         currentPage = value;
         switch ((int) value) {
             case 0:
-                return Navigation.ADMIN_HOME_PAGE;
+                return NavigationAdmin.ADMIN_HOME_PAGE;
             case 1:
-                return Navigation.CATEGORIES_PAGE;
+                return NavigationAdmin.CATEGORIES_PAGE;
             case 2:
-                return Navigation.ITEMS_PAGE;
+                return NavigationAdmin.ITEMS_PAGE;
             case 3:
-                return Navigation.ORDERS_PAGE;
+                return NavigationAdmin.ORDERS_PAGE;
             default:
-                return Navigation.ADMIN_HOME_PAGE;
+                return NavigationAdmin.ADMIN_HOME_PAGE;
         }
     }
 

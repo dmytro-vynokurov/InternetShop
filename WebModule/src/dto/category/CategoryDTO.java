@@ -1,4 +1,4 @@
-package dto.admin.category;
+package dto.category;
 
 import dao.CategoryDAO;
 import entities.Category;
@@ -12,7 +12,9 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
-import static dto.admin.Navigation.*;
+import static dto.service.NavigationAdmin.*;
+import static dto.service.Util.createMessage;
+import static dto.service.Util.navigateTo;
 
 /**
  * User: Dmytro_Vynokurov
@@ -22,6 +24,13 @@ import static dto.admin.Navigation.*;
 @ManagedBean(name = "categoryDTO")
 @SessionScoped
 public class CategoryDTO implements Serializable {
+
+    private static final String NOT_CHOSEN_ADD_SUBCATEGORY ="Choose parent category first";
+    private static final String NOT_CHOSEN_EDIT_CATEGORY = "Choose category to edit";
+    private static final String NOT_CHOSEN_DELETE_CATEGORY = "Choose category to delete";
+    private static final String CANNOT_DELETE_DEFAULT = "Cannot delete default category";
+    private static final String DEFAULT_CANNOT_HAVE_PARENT = "Default category cannot have parent category";
+    private static final String CANNOT_REFERENCE_ITSELF = "Parent category cannot reference to itself";
 
     @EJB
     private CategoryDAO categoryDAO;
@@ -36,7 +45,7 @@ public class CategoryDTO implements Serializable {
             parentCategory = selectedCategory;
             navigateTo(ADD_CATEGORY_PAGE);
         } else {
-            createMessage("Choose parent category first");
+            createMessage(NOT_CHOSEN_ADD_SUBCATEGORY);
         }
     }
 
@@ -45,18 +54,18 @@ public class CategoryDTO implements Serializable {
         if (selectedCategory != null) {
             navigateTo(EDIT_CATEGORY_PAGE);
         } else {
-            createMessage("Choose category to edit");
+            createMessage(NOT_CHOSEN_EDIT_CATEGORY);
         }
     }
 
     @RolesAllowed("ADMIN")
     public void deleteCategory() {
         if (categoryDAO.isDefaultCategory(selectedCategory)) {
-            createMessage("Cannot delete default category");
+            createMessage(CANNOT_DELETE_DEFAULT);
         } else if (selectedCategory != null) {
             RequestContext.getCurrentInstance().execute("confirm_delete.show();");
         } else {
-            createMessage("Choose category to delete");
+            createMessage(NOT_CHOSEN_DELETE_CATEGORY);
         }
     }
 
@@ -73,9 +82,9 @@ public class CategoryDTO implements Serializable {
     public void updateCategory() throws IOException {
         if (categoryDAO.isDefaultCategory(selectedCategory) && parentCategory != null) {
             parentCategory = null;
-            createMessage("Default category cannot have parent category");
+            createMessage(DEFAULT_CANNOT_HAVE_PARENT);
         } else if (haveSameId(selectedCategory, parentCategory)) {
-            createMessage("Parent category cannot reference to itself");
+            createMessage(CANNOT_REFERENCE_ITSELF);
         } else if (categoryDAO.isAncestor(selectedCategory, parentCategory)) {
             createMessage("Chosen parent category(" +
                     parentCategory.getCategoryName() +
@@ -88,7 +97,6 @@ public class CategoryDTO implements Serializable {
         }
     }
 
-    @RolesAllowed("ADMIN")
     private boolean haveSameId(Category first, Category second) {
         return ((int) first.getIdCategory()) == ((int) second.getIdCategory());
     }
@@ -111,7 +119,6 @@ public class CategoryDTO implements Serializable {
         return selectedCategory;
     }
 
-    @RolesAllowed("ADMIN")
     public void setSelectedCategory(Category selectedCategory) {
         this.selectedCategory = selectedCategory;
     }

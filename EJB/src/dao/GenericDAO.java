@@ -3,6 +3,7 @@ package dao;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.persistence.Query;
 import java.util.List;
 
 /**
@@ -33,7 +34,7 @@ public abstract class GenericDAO<T> {
     public List<T> findAll() {
         return executeQuery(new QueryBuilder() {
             @Override
-            public TypedQuery<T> buildQuery() {
+            public Query buildQuery() {
                 return em.createQuery("SELECT o FROM " + entityClass().getSimpleName() + " o", entityClass());
             }
         });
@@ -47,14 +48,14 @@ public abstract class GenericDAO<T> {
 
     protected List<T> executeQuery(QueryBuilder<T> queryBuilder) {
         List<T> result;
-        TypedQuery<T> query = queryBuilder.buildQuery();
-        result = query.getResultList();
+        Query query = queryBuilder.buildQuery();
+        result = (List<T>)query.getResultList();
         return result;
     }
 
     protected abstract Class<T> entityClass();
 
     protected abstract class QueryBuilder<T> {
-        public abstract TypedQuery<T> buildQuery();
+        public abstract Query buildQuery();
     }
 }

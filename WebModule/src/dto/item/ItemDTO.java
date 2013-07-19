@@ -1,8 +1,8 @@
-package dto.admin.item;
+package dto.item;
 
 import dao.ItemDAO;
-import dto.admin.Admin;
-import dto.admin.category.CategoryDTO;
+import dto.category.CategoryDTO;
+import dto.service.Admin;
 import entities.Category;
 import entities.Item;
 import entities.dictionaries.Color;
@@ -18,7 +18,10 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
-import static dto.admin.Navigation.*;
+import static dto.service.NavigationAdmin.EDIT_ITEM_PAGE;
+import static dto.service.NavigationAdmin.ITEMS_PAGE;
+import static dto.service.Util.createMessage;
+import static dto.service.Util.navigateTo;
 
 /**
  * User: Dmitry
