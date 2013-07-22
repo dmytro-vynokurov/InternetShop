@@ -23,14 +23,15 @@
         <ui:define name="content">
             <h:form id="form">
                 <h2>Cart</h2>
-                <p:dataTable value="#{cartDTO.cartModel}" var="entry" selectionMode="single"
-                             selection="#{cartDTO.selectedEntry}" id="entries">
+                <p:dataTable value="#{cartDTO.cartModel}" var="entry" id="entries">
                     <p:column headerText="Item">
-                        #{entry.item}
+                        #{entry.item.itemName}
                     </p:column>
 
                     <p:column headerText="Quantity">
-                        <p:spinner value="#{entry.quantity}" min="0" max="#{entry.item.quantity}"/>
+                        <p:spinner value="#{entry.quantity}" min="0" max="#{entry.item.quantity}">
+                            <p:ajax update=":form:total_price :form:entries" process="@this"/>
+                        </p:spinner>
                     </p:column>
 
                     <p:column headerText="Price">
@@ -43,10 +44,10 @@
                 </p:dataTable>
 
                 <div align="right">
-                    <h3>Total: #{cartDTO.totalPrice}</h3>
+                    <h3>Total: <h:outputText id="total_price" value="#{cartDTO.totalPrice}"/></h3>
                 </div>
 
-                <p:commandButton value="Confirm order" action="register_order"/>
+                <p:commandButton value="Confirm order" action="#{cartDTO.confirmOrder}"/>
 
             </h:form>
         </ui:define>

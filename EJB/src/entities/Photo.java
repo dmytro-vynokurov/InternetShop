@@ -18,7 +18,7 @@ public final class Photo {
     private int idPhoto;
     @Column(name = "IMAGE", nullable = false, insertable = true, updatable = true, length = 4000, precision = 0)
     @Lob
-    @Basic(fetch = FetchType.LAZY)
+    @Basic(fetch = FetchType.EAGER)
     private Blob image;
     @ManyToOne
     @JoinColumn(name = "ID_ITEM", referencedColumnName = "ID_ITEM", nullable = false)

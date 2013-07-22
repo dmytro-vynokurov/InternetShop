@@ -22,23 +22,31 @@
 <h:body>
     <ui:composition template="/templates/common_layout.xhtml">
         <ui:define name="content">
+            <div>
+                <div style="float:left">
+                    <h:form id="form_index_categories">
+                        <p:dataTable id="index_categories" var="category" value="#{catalogueDTO.categoryModel}"
+                                     selection="#{catalogueDTO.selectedCategory}" selectionMode="single"
+                                     style="width:626px;">
 
-            <h:form id="form_index_categories">
-                <p:dataTable id="index_categories" var="category" value="#{catalogueDTO.categoryModel}"
-                             selection="#{catalogueDTO.selectedCategory}" selectionMode="single">
+                            <p:ajax event="rowSelect" listener="#{catalogueDTO.viewItems}"/>
 
-                    <p:ajax event="rowSelect" listener="#{catalogueDTO.viewItems}"/>
+                            <f:facet name="header">
+                                Choose category
+                            </f:facet>
 
-                    <f:facet name="header">
-                        Choose category
-                    </f:facet>
+                            <p:column headerText="Name">
+                                #{category.categoryName}
+                            </p:column>
 
-                    <p:column headerText="Name">
-                        #{category.categoryName}
-                    </p:column>
-
-                </p:dataTable>
-            </h:form>
+                        </p:dataTable>
+                    </h:form>
+                </div>
+                <div style="float:right">
+                    <img align="right" src="http://localhost:8089/web/picture.jpg" alt=""/>
+                </div>
+                <div style="clear:both"/>
+            </div>
         </ui:define>
     </ui:composition>
 </h:body>

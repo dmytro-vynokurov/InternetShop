@@ -1,12 +1,11 @@
 package dto.catalogue;
 
-import dao.CategoryDAO;
-import dao.ItemDAO;
-import dao.PhotoDAO;
+import dao.*;
 import dto.cart.CartDTO;
 import dto.category.CategoryModel;
 import dto.item.ItemModel;
 import entities.Category;
+import entities.Characteristic;
 import entities.Item;
 import entities.Photo;
 
@@ -36,12 +35,27 @@ public class CatalogueDTO implements Serializable {
     ItemDAO itemDAO;
     @EJB
     PhotoDAO photoDAO;
+    @EJB
+    private VideoDAO videoDAO;
+    @EJB
+    private CharacteristicDAO characteristicDAO;
     @ManagedProperty(value = "#{cartDTO}")
     CartDTO cartDTO;
 
     Category selectedCategory;
     Item selectedItem;
 
+    public Object getPhoto(Item item) {
+        //todo: make loading images from database
+        List<Photo> photos = photoDAO.findPhotosOfItem(item);
+        if (photos.isEmpty()) return "<img src=\"http://localhost:8089/web/nophoto.jpg\" height=\"42\" width=\"42\">";
+        else return photos.get(0);
+    }
+
+    public String getVideo() {
+        System.out.println(videoDAO.findVideoOfItem(selectedItem).getUrl());
+        return videoDAO.findVideoOfItem(selectedItem).getUrl();
+    }
 
     public void viewItem() throws IOException {
         navigateTo(ITEM_PAGE);
@@ -51,14 +65,12 @@ public class CatalogueDTO implements Serializable {
         navigateTo(SHOP_PREFIX + CATALOGUE_PAGE);
     }
 
-    public Object getPhoto(Item item) {
-        List<Photo> photos = photoDAO.findItemsOfCategory(item);
-        if (photos.isEmpty()) return "<img src=\"http://localhost:8089/web/noitem.jpg\" height=\"42\" width=\"42\">";
-        else return photos.get(0);
-    }
-
     public CategoryModel getCategoryModel() {
         return new CategoryModel(categoryDAO.findAll());
+    }
+
+    public List<Characteristic> getCharacteristics() {
+        return characteristicDAO.findCharacteristicsOfItem(selectedItem);
     }
 
     public ItemModel getItemModel() {
@@ -81,7 +93,9 @@ public class CatalogueDTO implements Serializable {
         return selectedItem;
     }
 
-    public void setSelectedItem(Item selectedItem) {
+    public void setSelectedItem(Item selectedItem) throws IOException {
         this.selectedItem = selectedItem;
+        navigateTo(ITEM_PAGE);
+
     }
 }

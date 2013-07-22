@@ -38,14 +38,6 @@
     </navigation-rule>
 
     <navigation-rule>
-        <from-view-id>/*</from-view-id>
-        <navigation-case>
-            <from-outcome>index</from-outcome>
-            <to-view-id>/index.xhtml</to-view-id>
-        </navigation-case>
-    </navigation-rule>
-
-    <navigation-rule>
         <from-view-id>/shop/*</from-view-id>
         <navigation-case>
             <from-outcome>item</from-outcome>
@@ -62,6 +54,10 @@
         <navigation-case>
             <from-outcome>catalogue</from-outcome>
             <to-view-id>/shop/catalogue.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>index</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
 

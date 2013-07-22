@@ -21,8 +21,6 @@ public class NameValidator implements Validator {
     @Override
     public void validate(FacesContext facesContext, UIComponent uiComponent, Object o) throws ValidatorException {
         String name = (String) o;
-        Map<String, String> parameters = facesContext.getExternalContext().getRequestParameterMap();
-
         if (name.contains(CategoryConverter.SPLITTER)) {
             FacesMessage message = new FacesMessage("Name cannot contain " + CategoryConverter.SPLITTER);
             FacesContext.getCurrentInstance().addMessage(null, message);

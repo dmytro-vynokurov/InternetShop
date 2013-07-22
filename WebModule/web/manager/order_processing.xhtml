@@ -9,19 +9,76 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets"
         >
+
 
 <h:head>
     <title>Simple JSF Facelets page</title>
 </h:head>
 
 <h:body>
-    <ui:composition template="/templates/common_layout.xhtml">
+    <ui:composition template="/templates/manager_layout.xhtml">
         <ui:define name="content">
-            <h:form id="form">
+            <h:form id="form_order_processing">
+                <div style="float:left">
+                    <p:panelGrid columns="2">
+                        <h:outputText value="Payment type:"/>
+                        <h:selectOneMenu value="#{orderPickerDTO.selectedOrder.paymentType}">
+                            <f:selectItems value="#{dictionaryDTO.paymentTypes}"/>
+                        </h:selectOneMenu>
 
+                        <h:outputText value="Delivery type:"/>
+                        <h:selectOneMenu value="#{orderPickerDTO.selectedOrder.deliveryType}">
+                            <f:selectItems value="#{dictionaryDTO.deliveryTypes}"/>
+                        </h:selectOneMenu>
+
+                        <h:outputText value="Your name:"/>
+                        <h:outputText value="#{orderPickerDTO.selectedOrder.userName}"/>
+
+                        <h:outputText value="Phone:"/>
+                        <h:outputText value="#{orderPickerDTO.selectedOrder.userPhone}"/>
+
+                        <h:outputText value="Email:"/>
+                        <h:outputText value="#{orderPickerDTO.selectedOrder.userEmail}"/>
+
+                        <h:outputText value="Comment"/>
+                        <h:outputText value="#{cartOrderDetailsDTO.comment}"/>
+                    </p:panelGrid>
+                </div>
+                <div style="float:left">
+                    <p:dataTable value="#{orderPickerDTO.cartModel}" var="entry" id="entries">
+                        <p:column headerText="Item">
+                            #{entry.item.itemName}
+                        </p:column>
+
+                        <p:column headerText="Quantity">
+                            <p:spinner value="#{entry.quantity}" min="0" max="#{entry.item.quantity}">
+                                <p:ajax update=":form_order_processing:total_price :form_order_processing:entries"
+                                        process="@this"/>
+                            </p:spinner>
+                        </p:column>
+
+                        <p:column headerText="Price">
+                            #{entry.item.price}
+                        </p:column>
+
+                        <p:column headerText="Total">
+                            #{entry.quantity*entry.item.price}
+                        </p:column>
+                    </p:dataTable>
+
+                    <div align="right">
+                        <h3>Total: <h:outputText id="total_price" value="#{orderPickerDTO.totalPrice}"/></h3>
+                    </div>
+                </div>
+                <div style="clear:both"/>
+                <p:commandButton value="Confirm order" action="#{orderPickerDTO.confirmOrder}"/>
+                <p:commandButton value="Discard order" action="#{orderPickerDTO.discardOrder}"/>
+                <p:commandButton value="Back to orders" action="#{orderPickerDTO.backToOrders}"/>
             </h:form>
         </ui:define>
     </ui:composition>

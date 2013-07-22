@@ -22,32 +22,37 @@
     <ui:composition template="/templates/common_layout.xhtml">
         <ui:define name="content">
             <h:form id="form">
+                <p:growl id="growl" sticky="true"/>
+
                 <p:panelGrid columns="2">
                     <h:outputText value="Payment type:"/>
-                    <h:selectOneMenu value="#{cartDTO.currentOrder.paymentType}">
-                        <f:selectItems value="#{cartDTO.paymentTypes}"/>
+                    <h:selectOneMenu value="#{cartOrderDetailsDTO.paymentType}">
+                        <f:selectItems value="#{dictionaryDTO.paymentTypes}"/>
                     </h:selectOneMenu>
 
                     <h:outputText value="Delivery type:"/>
-                    <h:selectOneMenu value="#{cartDTO.currentOrder.deliveryType}">
-                        <f:selectItems value="#{cartDTO.deliveryTypes}"/>
+                    <h:selectOneMenu value="#{cartOrderDetailsDTO.deliveryType}">
+                        <f:selectItems value="#{dictionaryDTO.deliveryTypes}"/>
                     </h:selectOneMenu>
 
                     <h:outputText value="Your name:"/>
-                    <h:inputText value="#{cartDTO.currentOrder.userName}"/>
+                    <h:inputText value="#{cartOrderDetailsDTO.name}"/>
 
-                    <h:outputText value="Phone:"/>
-                    <h:inputText value="#{cartDTO.currentOrder.userPhone}" required="true"/>
+                    <h:outputText value="Phone:" id="phone"/>
+                    <h:inputText value="#{cartOrderDetailsDTO.phone}">
+                        <f:validator validatorId="PhoneValidator"/>
+                    </h:inputText>
 
-                    <h:outputText value="Email:"/>
-                    <h:inputText value="#{cartDTO.currentOrder.userEmail}">
+                    <h:outputText value="Email:" id="email"/>
+                    <h:inputText value="#{cartOrderDetailsDTO.email}">
                         <f:validator validatorId="EmailValidator"/>
                     </h:inputText>
 
-                    <h:inputText value="Comment"/>
-                    <h:inputTextarea value="#{cartDTO.currentOrder.comment}"/>
+                    <h:outputText value="Comment"/>
+                    <h:inputTextarea value="#{cartOrderDetailsDTO.comment}"/>
 
-                    <p:commandButton value="Confirm order" action="#{cartDTO.registerOrder}"/>
+                    <p:commandButton value="Confirm order" update=":form:growl"
+                                     actionListener="#{cartOrderDetailsDTO.registerOrder}"/>
                 </p:panelGrid>
             </h:form>
         </ui:define>

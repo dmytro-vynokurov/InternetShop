@@ -24,15 +24,15 @@
             <h:form id="form_catalogue">
                 <p:dataTable id="items_table" var="item" value="#{catalogueDTO.itemModel}"
                              selection="#{catalogueDTO.selectedItem}" selectionMode="single">
+                    <p:ajax event="rowSelect" listener="#{catalogueDTO.viewItem}"/>
 
                     <p:column>
-                        <div align="left">#{catalogueDTO.getPhoto(item)}</div>
-                        <div align="right">
-                            <p:commandLink actionListener="#{catalogueDTO.viewItem}">
-                                <p>#{item.itemName}</p>
+                        <!--todo load photos from DB not from a file-->
+                        <div style="float:left"><p:graphicImage id="image" value="/nophoto.jpg"/></div>
+                        <div style="float:right">
+                            <p>#{item.itemName}</p>
 
-                                <p>#{item.price}</p>
-                            </p:commandLink>
+                            <p>#{item.price}</p>
                         </div>
                     </p:column>
 

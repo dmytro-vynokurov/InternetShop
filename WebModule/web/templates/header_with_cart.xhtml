@@ -16,7 +16,17 @@
 <h:body>
     <ui:composition>
         <h:form id="form_header">
-            <h1>My Shop</h1>
+            <div style="float:left">
+                <h:commandLink action="#{navigator.moveToIndex}">
+                    <h1>My Shop</h1>
+                </h:commandLink>
+            </div>
+            <div style="float:right">
+                <h:commandLink action="#{navigator.moveToCart}">
+                    <h3>Cart</h3>
+                </h:commandLink>
+            </div>
+            <div style="clear:both"/>
         </h:form>
     </ui:composition>
 </h:body>

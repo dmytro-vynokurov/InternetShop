@@ -10,9 +10,9 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets"
         >
-
 <h:head>
     <title>Simple JSF Facelets page</title>
 </h:head>
@@ -21,7 +21,34 @@
     <ui:composition template="/templates/common_layout.xhtml">
         <ui:define name="content">
             <h:form id="form_item">
-                <h3>#{}</h3>
+                <h3>#{catalogueDTO.selectedItem.itemName}</h3>
+
+                <div style="float:left">
+                    <!--todo insert here image loading-->
+                    <p:graphicImage id="image" value="/nophoto.jpg"/><br/>
+                    <p:media value="#{catalogueDTO.video}" width="420" height="250" player="flash"/>
+                </div>
+                <div style="float:left">
+                    <h3>Price:   #{catalogueDTO.selectedItem.price}</h3>
+
+                    <p:commandButton value="Add to cart" action="#{cartDTO.addItem(catalogueDTO.selectedItem)}"/>
+
+                    <h3>Description:</h3>
+                    #{catalogueDTO.selectedItem.description}
+
+                    <h3>Characteristics</h3>
+                    <p:dataTable value="#{catalogueDTO.characteristics}" var="characteristic">
+                        <p:column headerText="Characteristic name">
+                            #{characteristic.characteristicType.characteristicTypeName}
+                        </p:column>
+                        <p:column headerText="Characteristic value">
+                            #{characteristic.value} #{characteristic.measure} #{characteristic.description}
+                        </p:column>
+                    </p:dataTable>
+
+                </div>
+                <div style="clear:both"/>
+
             </h:form>
         </ui:define>
     </ui:composition>

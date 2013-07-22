@@ -20,7 +20,7 @@ import java.util.List;
 @Stateless
 @Path("/categoryREST")
 public class CategoryREST {
-    private static final String CATEGORY_DAO_LOOKUP_PATH="java:global/rest/CategoryDAO";
+    private static final String CATEGORY_DAO_LOOKUP_PATH = "java:global/rest/CategoryDAO";
 
     @EJB
     CategoryDAO categoryDAO;

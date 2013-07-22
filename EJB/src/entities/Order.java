@@ -13,7 +13,7 @@ import java.util.List;
  * Time: 5:19 PM
  */
 @Entity
-@Table(name = "\"ORDER\"", catalog = "", schema = "INTERNETSHOP")
+@Table(name = "ORDER1", catalog = "", schema = "INTERNETSHOP")
 public final class Order {
     @Column(name = "ID_ORDER", nullable = false, insertable = true, updatable = true, length = 6, precision = 0)
     @Id
@@ -29,22 +29,22 @@ public final class Order {
     @Column(name = "USER_EMAIL", nullable = true, insertable = true, updatable = true, length = 100, precision = 0)
     @Basic
     private String userEmail;
-    @Column(name = "Comment", nullable = true, insertable = true, updatable = true, length = 1000, precision = 0)
+    @Column(name = "ORDER_COMMENT", nullable = true, insertable = true, updatable = true, length = 1000, precision = 0)
     @Basic
     private String comment;
-    @Column(name = "DELIVERY_TYPE", nullable = false, insertable = true, updatable = true, length = 15, precision = 0)
+    @Column(name = "DELIVERY_TYPE", nullable = false, insertable = true, updatable = true, length = 30, precision = 0)
     @Basic
     @Enumerated(EnumType.STRING)
     private DeliveryType deliveryType;
-    @Column(name = "PAYMENT_TYPE", nullable = false, insertable = true, updatable = true, length = 15, precision = 0)
+    @Column(name = "PAYMENT_TYPE", nullable = false, insertable = true, updatable = true, length = 30, precision = 0)
     @Basic
     @Enumerated(EnumType.STRING)
     private PaymentType paymentType;
-    @Column(name = "ORDER_STATUS", nullable = false, insertable = true, updatable = true, length = 15, precision = 0)
+    @Column(name = "ORDER_STATUS", nullable = false, insertable = true, updatable = true, length = 30, precision = 0)
     @Basic
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
     private List<ItemOrder> itemOrders;
     @JoinTable(name = "ITEM_ORDER", catalog = "", schema = "INTERNETSHOP", joinColumns = @JoinColumn(name = "ID_ORDER", referencedColumnName = "ID_ORDER", nullable = false), inverseJoinColumns = @JoinColumn(name = "ID_ITEM", referencedColumnName = "ID_ITEM", nullable = false))
     @ManyToMany

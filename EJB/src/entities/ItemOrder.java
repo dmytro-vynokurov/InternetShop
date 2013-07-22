@@ -16,7 +16,7 @@ public class ItemOrder implements Serializable {
     @Basic
     private int quantity;
     @Id
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "ID_ITEM", referencedColumnName = "ID_ITEM", nullable = false)
     private Item item;
     @Id

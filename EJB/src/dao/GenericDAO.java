@@ -3,6 +3,8 @@ package dao;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
 
 /**
@@ -42,6 +44,13 @@ public abstract class GenericDAO<T> {
         T result;
         result = em.find(entityClass(), id);
         return result;
+    }
+
+    public Long count(){
+        CriteriaBuilder qb = em.getCriteriaBuilder();
+        CriteriaQuery<Long> cq = qb.createQuery(Long.class);
+        cq.select(qb.count(cq.from(entityClass())));
+        return em.createQuery(cq).getSingleResult();
     }
 
     protected List<T> executeQuery(QueryBuilder<T> queryBuilder) {

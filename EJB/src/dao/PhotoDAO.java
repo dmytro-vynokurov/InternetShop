@@ -14,9 +14,10 @@ import java.util.List;
  */
 @Stateless
 public class PhotoDAO extends GenericDAO<Photo> {
+    private final static String DEFAULT_ITEM_PHOTO = "F:\\projects\\try2\\InternetShop\\WebModule\\web\\nophoto.jpg";
 
 
-    public List<Photo> findItemsOfCategory(final Item item) {
+    public List<Photo> findPhotosOfItem(final Item item) {
         return executeQuery(new QueryBuilder() {
             @Override
             public TypedQuery<Photo> buildQuery() {
@@ -25,6 +26,8 @@ public class PhotoDAO extends GenericDAO<Photo> {
             }
         });
     }
+
+    //todo: write Photo findOnePhotoOfItem(Item item)
 
     @Override
     protected Class<Photo> entityClass() {

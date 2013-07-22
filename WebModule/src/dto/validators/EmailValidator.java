@@ -3,6 +3,7 @@ package dto.validators;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.validator.FacesValidator;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 import java.util.regex.Matcher;
@@ -13,6 +14,7 @@ import java.util.regex.Pattern;
  * Date: 7/19/13
  * Time: 8:06 AM
  */
+@FacesValidator(value = "EmailValidator")
 public class EmailValidator implements Validator {
     private static final String EMAIL_PATTERN = ".+@.+";
     private static final String MESSAGE_SUMMARY = "E-mail validation failed.";
@@ -20,6 +22,7 @@ public class EmailValidator implements Validator {
 
     @Override
     public void validate(FacesContext facesContext, UIComponent uiComponent, Object o) throws ValidatorException {
+        System.out.println("Validating email");
         if (o == null) return;
         String field = (String) o;
 
@@ -29,6 +32,7 @@ public class EmailValidator implements Validator {
         if (!matcher.matches()) {
             FacesMessage msg = new FacesMessage(MESSAGE_SUMMARY, MESSAGE_DETAILS);
             msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+            FacesContext.getCurrentInstance().addMessage(null, msg);
             throw new ValidatorException(msg);
         }
     }

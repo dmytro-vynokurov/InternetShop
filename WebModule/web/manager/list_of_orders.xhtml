@@ -12,41 +12,50 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
         >
+
 
 <h:head>
     <title>Simple JSF Facelets page</title>
 </h:head>
 
 <h:body>
-    <h:form id="form">
-        <p:dataTable id="orders" var="order" value="#{tableBean.mediumCarsModel}" paginator="true" rows="10"
-                     selection="#{tableBean.selectedCar}" selectionMode="single">
+    <ui:composition template="/templates/manager_layout.xhtml">
+        <ui:define name="header">
 
-            <p:ajax event="rowSelect" listener="#{tableBean.onRowSelect}"
-                    update=":form:display :form:growl" oncomplete="PF('carDialog').show()"/>
+        </ui:define>
+        <ui:define name="content">
+            <h:form id="form_list_orders">
+                <p:dataTable id="orders" var="order" value="#{orderPickerDTO.orderPickerModel}"
+                             selectionMode="single" selection="#{orderPickerDTO.selectedOrder}"
+                             paginator="true" rows="20" rowsPerPageTemplate="20,30,40" lazy="true"
+                             paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink}
+                                        {CurrentPageReport} {NextPageLink} {LastPageLink}">
 
-            <f:facet name="header">
-                Select a row to display a message
-            </f:facet>
+                    <p:ajax event="rowSelect" listener="#{orderPickerDTO.processOrder}"/>
 
-            <p:column headerText="Model">
-                #{car.model}
-            </p:column>
+                    <p:column headerText="ID">
+                        #{order.idOrder}
+                    </p:column>
 
-            <p:column headerText="Year">
-                #{car.year}
-            </p:column>
+                    <p:column headerText="Payment type">
+                        #{order.paymentType}
+                    </p:column>
 
-            <p:column headerText="Manufacturer">
-                #{car.manufacturer}
-            </p:column>
+                    <p:column headerText="Delivery type">
+                        #{order.deliveryType}
+                    </p:column>
 
-            <p:column headerText="Color">
-                #{car.color}
-            </p:column>
-        </p:dataTable>
-    </h:form>
+                    <p:column headerText="Total price">
+                        #{orderPickerDTO.totalOrderPrice(order)}
+                    </p:column>
+
+                </p:dataTable>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
 </h:body>
 
 </html>
