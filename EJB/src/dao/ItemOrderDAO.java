@@ -15,7 +15,7 @@ import java.util.List;
 @Stateless
 public class ItemOrderDAO extends GenericDAO<ItemOrder> {
 
-    public List<ItemOrder> findItemOrdersOfOrder(final Order order){
+    public List<ItemOrder> findItemOrdersOfOrder(final Order order) {
         return executeQuery(new QueryBuilder() {
             @Override
             public TypedQuery<ItemOrder> buildQuery() {

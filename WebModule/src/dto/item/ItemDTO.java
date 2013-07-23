@@ -14,7 +14,9 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.model.DataModel;
 import javax.faces.model.SelectItem;
+import javax.naming.NamingException;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
@@ -41,7 +43,7 @@ public class ItemDTO implements Serializable {
     private Admin admin;
     private Item selectedItem;
     private boolean allItemsShown;
-    private ItemModel itemModel;
+    private DataModel<Item> itemModel;
 
     private String newItemName;
     private String newManufacturer;
@@ -56,9 +58,9 @@ public class ItemDTO implements Serializable {
     private Category newCategory;
 
     @PostConstruct
-    public void initialize() {
+    public void initialize() throws NamingException {
         allItemsShown = true;
-        itemModel = new ItemModel(itemDAO.findAll());
+        itemModel = new ItemModel();
     }
 
     @RolesAllowed("ADMIN")
@@ -108,13 +110,13 @@ public class ItemDTO implements Serializable {
         return itemDAO.findAll();
     }
 
-    public ItemModel getItemModel() {
+    public DataModel<Item> getItemModel() {
         return itemModel;
     }
 
     public void viewItemsOfCategory() throws IOException {
         if (categoryDTO.getSelectedCategory() != null) {
-            itemModel = new ItemModel(itemDAO.findPhotosOfItem(categoryDTO.getSelectedCategory()));
+            itemModel = new ItemModel(itemDAO.findItemsOfCategory(categoryDTO.getSelectedCategory()));
             allItemsShown = false;
             admin.setPageIndex(Admin.ITEMS_INDEX);
             navigateTo(ITEMS_PAGE);
@@ -124,7 +126,7 @@ public class ItemDTO implements Serializable {
     }
 
     public void viewCatalogue() throws IOException {
-        itemModel = new ItemModel((itemDAO.findPhotosOfItem(categoryDTO.getSelectedCategory())));
+        itemModel = new ItemModel((itemDAO.findItemsOfCategory(categoryDTO.getSelectedCategory())));
         navigateTo(NavigationShop.CATALOGUE_PAGE);
     }
 

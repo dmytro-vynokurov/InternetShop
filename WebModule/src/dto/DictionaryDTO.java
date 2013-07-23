@@ -13,7 +13,7 @@ import java.io.Serializable;
  * Date: 7/22/13
  * Time: 7:11 AM
  */
-@ManagedBean(name="dictionaryDTO")
+@ManagedBean(name = "dictionaryDTO")
 @RequestScoped
 public class DictionaryDTO implements Serializable {
 

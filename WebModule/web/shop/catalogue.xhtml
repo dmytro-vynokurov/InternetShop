@@ -20,10 +20,13 @@
 <h:body>
     <ui:composition template="/templates/common_layout.xhtml">
         <ui:define name="content">
-            <h2>Catalogue</h2>
+            <h2>#{catalogueDTO.selectedCategory.categoryName}</h2>
             <h:form id="form_catalogue">
                 <p:dataTable id="items_table" var="item" value="#{catalogueDTO.itemModel}"
-                             selection="#{catalogueDTO.selectedItem}" selectionMode="single">
+                             selection="#{catalogueDTO.selectedItem}" selectionMode="single"
+                             paginator="true" rows="20" rowsPerPageTemplate="20,30,40" lazy="true"
+                             paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink}
+                                        {CurrentPageReport} {NextPageLink} {LastPageLink}">
                     <p:ajax event="rowSelect" listener="#{catalogueDTO.viewItem}"/>
 
                     <p:column>

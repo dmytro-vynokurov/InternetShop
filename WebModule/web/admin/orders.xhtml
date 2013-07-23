@@ -10,13 +10,39 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets"
         >
 
 <h:body>
     <ui:composition template="/templates/admin_layout.xhtml">
         <ui:define name="content">
-            There will be some content soon
+            <h:form id="form_list_orders">
+                <p:dataTable id="orders" var="order" value="#{orderDTO.orders}"
+                             paginator="true" rows="20" rowsPerPageTemplate="20,30,40" lazy="true"
+                             paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink}
+                                        {CurrentPageReport} {NextPageLink} {LastPageLink}">
+
+                    <p:ajax event="rowSelect" listener="#{orderPickerDTO.processOrder}"/>
+
+                    <p:column headerText="ID">
+                        #{order.idOrder}
+                    </p:column>
+
+                    <p:column headerText="Payment type">
+                        #{order.paymentType}
+                    </p:column>
+
+                    <p:column headerText="Delivery type">
+                        #{order.deliveryType}
+                    </p:column>
+
+                    <p:column headerText="Total price">
+                        #{orderPickerDTO.totalOrderPrice(order)}
+                    </p:column>
+
+                </p:dataTable>
+            </h:form>
         </ui:define>
     </ui:composition>
 </h:body>

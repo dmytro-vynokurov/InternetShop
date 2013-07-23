@@ -43,11 +43,11 @@ public class OrderProcessorDTO implements Serializable {
         navigateTo(LIST_OF_ORDERS_PAGE);
     }
 
-    public double getTotalPrice(){
+    public double getTotalPrice() {
         return cartEJB.getTotalPrice();
     }
 
-    public CartModel getCartModel(){
+    public CartModel getCartModel() {
         return new CartModel(cartEJB.getOrder().getItemOrders());
     }
 }

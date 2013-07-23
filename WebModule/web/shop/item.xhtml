@@ -21,6 +21,8 @@
     <ui:composition template="/templates/common_layout.xhtml">
         <ui:define name="content">
             <h:form id="form_item">
+                <p:growl id="growl"/>
+
                 <h3>#{catalogueDTO.selectedItem.itemName}</h3>
 
                 <div style="float:left">
@@ -31,7 +33,8 @@
                 <div style="float:left">
                     <h3>Price:   #{catalogueDTO.selectedItem.price}</h3>
 
-                    <p:commandButton value="Add to cart" action="#{cartDTO.addItem(catalogueDTO.selectedItem)}"/>
+                    <p:commandButton value="Add to cart" update=":form_item:growl"
+                                     action="#{cartDTO.addItem(catalogueDTO.selectedItem)}"/>
 
                     <h3>Description:</h3>
                     #{catalogueDTO.selectedItem.description}

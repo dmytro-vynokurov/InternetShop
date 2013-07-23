@@ -3,7 +3,8 @@ package dao;
 import entities.Order;
 
 import javax.ejb.Stateless;
-import javax.persistence.*;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -22,7 +23,8 @@ public class OrderDAO extends GenericDAO<Order> {
                     "from (ORDER1 o join item_order io on o.id_order=io.id_order)\n" +
                     "     join Item i on i.id_item=io.id_item\n" +
                     "where o.order_status='WAITING_FOR_PROCESSING'\n" +
-                    "group by o.id_order\n" +
+                    "group by o.id_order,o.user_name,o.user_phone,o.order_comment,\n" +
+                    "o.delivery_type,o.payment_type,o.order_status,\n" +
                     "order by tp";
 
     private final static String TOTAL_COST_QUERY =
@@ -63,27 +65,16 @@ public class OrderDAO extends GenericDAO<Order> {
     }
 
     public List<Order> findSortedBySumWaitingForProcessingInRange(int start, int finish, boolean descending) {
-        System.out.println("Running query from "+start+" to "+finish);
+        System.out.println("Running query from " + start + " to " + finish);
         String sortOrder;
         if (descending) sortOrder = "desc";
         else sortOrder = "asc";
         Query query = em.createNativeQuery(SORTED_BY_SUM_WAITING_FOR_PROCESSING_IN_RANGE + " " + sortOrder, Order.class);
-        query.setParameter("min_val", start-1);
+        query.setParameter("min_val", start - 1);
         query.setParameter("max_val", finish);
         List<Order> result = (List<Order>) query.getResultList();
         System.out.println("Result: " + result);
         return result;
-    }
-
-    @Override
-    public Order find(final Object idOrder){
-        return executeQuery(new QueryBuilder() {
-            @Override
-            public TypedQuery<Order> buildQuery() {
-                TypedQuery<Order> query = em.createQuery("SELECT o FROM Order o WHERE o.idOrder=:id", Order.class);
-                return query.setParameter("id", (Integer)idOrder);
-            }
-        }).get(0);
     }
 
     @Override

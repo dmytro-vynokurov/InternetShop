@@ -9,7 +9,6 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -31,7 +30,8 @@
                              selectionMode="single" selection="#{orderPickerDTO.selectedOrder}"
                              paginator="true" rows="20" rowsPerPageTemplate="20,30,40" lazy="true"
                              paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink}
-                                        {CurrentPageReport} {NextPageLink} {LastPageLink}">
+                                        {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                        >
 
                     <p:ajax event="rowSelect" listener="#{orderPickerDTO.processOrder}"/>
 

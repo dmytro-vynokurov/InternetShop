@@ -30,10 +30,12 @@
         <navigation-case>
             <from-outcome>add_category</from-outcome>
             <to-view-id>/admin/add_category.xhtml</to-view-id>
+            <redirect/>
         </navigation-case>
         <navigation-case>
             <from-outcome>add_item</from-outcome>
             <to-view-id>/admin/add_item.xhtml</to-view-id>
+            <redirect/>
         </navigation-case>
     </navigation-rule>
 
@@ -42,22 +44,27 @@
         <navigation-case>
             <from-outcome>item</from-outcome>
             <to-view-id>/shop/item.xhtml</to-view-id>
+            <redirect/>
         </navigation-case>
         <navigation-case>
             <from-outcome>cart</from-outcome>
             <to-view-id>/shop/cart.xhtml</to-view-id>
+            <redirect/>
         </navigation-case>
         <navigation-case>
             <from-outcome>register_order</from-outcome>
             <to-view-id>/shop/register_order.xhtml</to-view-id>
+            <redirect/>
         </navigation-case>
         <navigation-case>
             <from-outcome>catalogue</from-outcome>
             <to-view-id>/shop/catalogue.xhtml</to-view-id>
+            <redirect/>
         </navigation-case>
         <navigation-case>
             <from-outcome>index</from-outcome>
             <to-view-id>/index.xhtml</to-view-id>
+            <redirect/>
         </navigation-case>
     </navigation-rule>
 

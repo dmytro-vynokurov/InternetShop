@@ -1,7 +1,6 @@
 package dto.cart;
 
 import dto.service.Navigator;
-import dto.service.Util;
 import ejb.CartEJB;
 import entities.Order;
 import entities.dictionaries.DeliveryType;
@@ -10,18 +9,15 @@ import entities.dictionaries.PaymentType;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.model.SelectItem;
 import java.io.IOException;
 import java.io.Serializable;
-
-import static dto.service.Util.*;
 
 /**
  * User: Dmitry
  * Date: 7/22/13
  * Time: 1:40 AM
  */
-@ManagedBean(name= "cartOrderDetailsDTO")
+@ManagedBean(name = "cartOrderDetailsDTO")
 public class CartOrderDetailsDTO implements Serializable {
 
     @EJB
@@ -45,7 +41,7 @@ public class CartOrderDetailsDTO implements Serializable {
         order.setComment(comment);
         order.setOrderStatus(OrderStatus.WF_PROCESSING);
 
-        System.out.println("Order: "+order);
+        System.out.println("Order: " + order);
 
         cartEJB.registerOrder();
 

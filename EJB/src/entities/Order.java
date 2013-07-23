@@ -44,7 +44,7 @@ public final class Order {
     @Basic
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
-    @OneToMany(mappedBy = "order", cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private List<ItemOrder> itemOrders;
     @JoinTable(name = "ITEM_ORDER", catalog = "", schema = "INTERNETSHOP", joinColumns = @JoinColumn(name = "ID_ORDER", referencedColumnName = "ID_ORDER", nullable = false), inverseJoinColumns = @JoinColumn(name = "ID_ITEM", referencedColumnName = "ID_ITEM", nullable = false))
     @ManyToMany

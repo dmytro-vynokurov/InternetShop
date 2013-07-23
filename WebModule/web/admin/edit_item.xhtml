@@ -101,103 +101,59 @@
                     </p:panelGrid>
                 </h:form>
 
-                <p:dataTable id="characteristics"
-                             var="characteristic"
-                             value="#{characteristicDTO.characteristicModel}"
-                             selection="#{characteristicDTO.selectedCharacteristic}"
-                             selectionMode="single"
-                             widgetVar="characteristics"
-                             editable="true"
-                             editMode="cell">
-                    <f:facet name="header">
-                        Characteristics
-                    </f:facet>
-                    <p:ajax event="cellEdit" listener="#{characteristicDTO.updateCharacteristic}"/>
-                    <p:column headerText="ID">
-                        #{characteristic.idCharacteristic}
-                    </p:column>
-                    <p:column headerText="Value">
-                        <p:cellEditor>
-                            <f:facet name="output">
-                                <h:outputText value="#{characteristic.value}"/>
-                            </f:facet>
-                            <f:facet name="input">
-                                <p:inputText value="#{characteristic.value}"
-                                             style="width:100%"
-                                             label="Value"/>
-                            </f:facet>
-                        </p:cellEditor>
-                    </p:column>
-                    <p:column headerText="Measure">
-                        <p:cellEditor>
-                            <f:facet name="output">
-                                <h:outputText value="#{characteristic.measure}"/>
-                            </f:facet>
-                            <f:facet name="input">
-                                <p:inputText value="#{characteristic.measure}"
-                                             style="width:100%"
-                                             label="Measure"/>
-                            </f:facet>
-                        </p:cellEditor>
-                    </p:column>
-                    <p:column headerText="Description">
-                        <p:cellEditor>
-                            <f:facet name="output">
-                                <h:outputText value="#{characteristic.description}"/>
-                            </f:facet>
-                            <f:facet name="input">
-                                <p:inputText value="#{characteristic.description}"
-                                             style="width:100%"
-                                             label="Description"/>
-                            </f:facet>
-                        </p:cellEditor>
-                    </p:column>
-                </p:dataTable>
-                <h:form id="form_video">
-
-                    <p:dataTable id="characteristic_types"
+                <h:form id="form_characteristics">
+                    <p:dataTable id="characteristics"
                                  var="characteristic"
-                                 value="#{characteristicTypeDTO.characteristicTypeModel}"
-                                 selection="#{characteristicTypeDTO.selectedCharacteristicType}"
+                                 value="#{characteristicDTO.characteristicModel}"
+                                 selection="#{characteristicDTO.selectedCharacteristic}"
                                  selectionMode="single"
-                                 widgetVar="characteristic_types"
                                  editable="true"
                                  editMode="cell">
                         <f:facet name="header">
-                            Characteristic types
+                            Characteristics
                         </f:facet>
-
-                        <p:ajax event="cellEdit" listener="#{characteristicTypeDTO.updateCharacteristicType}"/>
-
+                        <p:ajax event="cellEdit" listener="#{characteristicDTO.updateCharacteristic}"/>
                         <p:column headerText="ID">
-                            #{characteristic.idCharacteristicType}
+                            #{characteristic.idCharacteristic}
                         </p:column>
-
-                        <p:column headerText="Name">
+                        <p:column headerText="Value">
                             <p:cellEditor>
                                 <f:facet name="output">
-                                    <h:outputText value="#{characteristic.characteristicTypeName}"/>
+                                    <h:outputText value="#{characteristic.value}"/>
                                 </f:facet>
                                 <f:facet name="input">
-                                    <p:inputText value="#{characteristic.characteristicTypeName}"
-                                                 onselect="#{characteristicTypeDTO.setSelectedCharacteristicType(characteristic)}"
+                                    <p:inputText value="#{characteristic.value}"
                                                  style="width:100%"
-                                                 label="Name"/>
+                                                 label="Value"/>
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>
-
-                        <f:facet name="footer">
-                            <p:commandButton value="Add"
-                                             actionListener="#{characteristicTypeDTO.addCharacteristicType}"/>
-
-                            <p:commandButton value="Delete"
-                                             actionListener="#{characteristicTypeDTO.deleteCharacteristicType}"/>
-                        </f:facet>
-
+                        <p:column headerText="Measure">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{characteristic.measure}"/>
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{characteristic.measure}"
+                                                 style="width:100%"
+                                                 label="Measure"/>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        <p:column headerText="Description">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{characteristic.description}"/>
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{characteristic.description}"
+                                                 style="width:100%"
+                                                 label="Description"/>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
                     </p:dataTable>
                 </h:form>
-
             </p:panelGrid>
         </ui:define>
     </ui:composition>

@@ -77,9 +77,9 @@ public class CartEJB {
     }
 
     public void registerOrder() {
-        System.out.println("Registering order:\t"+order);
+        System.out.println("Registering order:\t" + order);
         orderDAO.create(order);
-        this.order=null;
+        this.order = null;
     }
 
     public double getTotalPrice() {

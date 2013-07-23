@@ -1,6 +1,7 @@
 package dto.order;
 
 import dao.OrderDAO;
+import dto.manager.OrderLazyModel;
 import entities.Order;
 import entities.dictionaries.DeliveryType;
 import entities.dictionaries.PaymentType;
@@ -9,6 +10,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
+import javax.naming.NamingException;
 import java.io.Serializable;
 
 /**
@@ -27,6 +29,10 @@ public class OrderDTO implements Serializable {
 
     public void registerOrder() {
         orderDAO.create(selectedOrder);
+    }
+
+    public OrderLazyModel getOrders() throws NamingException {
+        return new OrderLazyModel();
     }
 
     public SelectItem[] getPaymentTypes() {

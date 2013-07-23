@@ -10,6 +10,7 @@ import org.primefaces.model.LazyDataModel;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.naming.NamingException;
 import java.io.IOException;
 import java.io.Serializable;
 
@@ -44,7 +45,7 @@ public class OrderPickerDTO implements Serializable {
     }
 
     public void backToOrders() throws IOException {
-        selectedOrder=null;
+        selectedOrder = null;
         navigateTo(LIST_OF_ORDERS_PAGE);
     }
 
@@ -52,7 +53,7 @@ public class OrderPickerDTO implements Serializable {
         navigateTo(ORDER_PROCESSING_PAGE);
     }
 
-    public double getTotalPrice(){
+    public double getTotalPrice() {
         return totalOrderPrice(selectedOrder);
     }
 
@@ -60,19 +61,19 @@ public class OrderPickerDTO implements Serializable {
         return orderDAO.getTotalCost(order);
     }
 
-    public CartModel getCartModel(){
+    public CartModel getCartModel() {
         selectedOrder.setItemOrders(itemOrderDAO.findItemOrdersOfOrder(selectedOrder));
         return new CartModel(selectedOrder.getItemOrders());
     }
 
-    public LazyDataModel<Order> getOrderPickerModel() {
-        OrderPickerModel model = new OrderPickerModel(orderDAO);
+    public LazyDataModel<Order> getOrderPickerModel() throws NamingException {
+        OrderLazyModel model = new OrderLazyModel();
         model.setRowCount(orderDAO.count().intValue());
         fixPageSize(model);
         return model;
     }
 
-    private void fixPageSize(OrderPickerModel model) {
+    private void fixPageSize(OrderLazyModel model) {
         int pageSize = model.getPageSize();
         if (pageSize < 1) model.setPageSize(DEFAULT_PAGE_SIZE);
     }

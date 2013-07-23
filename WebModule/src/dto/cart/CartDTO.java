@@ -1,11 +1,13 @@
 package dto.cart;
 
+import dto.service.Util;
 import ejb.CartEJB;
 import entities.Item;
 import entities.ItemOrder;
 import entities.Order;
 
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import java.io.IOException;
@@ -29,6 +31,7 @@ public class CartDTO implements Serializable {
 
     public void addItem(Item item) {
         cartEJB.addItem(item);
+        Util.createMessage(item.getItemName()+" added to the cart");
     }
 
     public void confirmOrder() throws IOException {

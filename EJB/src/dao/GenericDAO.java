@@ -46,7 +46,7 @@ public abstract class GenericDAO<T> {
         return result;
     }
 
-    public Long count(){
+    public Long count() {
         CriteriaBuilder qb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = qb.createQuery(Long.class);
         cq.select(qb.count(cq.from(entityClass())));

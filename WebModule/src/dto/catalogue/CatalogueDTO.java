@@ -74,7 +74,7 @@ public class CatalogueDTO implements Serializable {
     }
 
     public ItemModel getItemModel() {
-        return new ItemModel(itemDAO.findPhotosOfItem(selectedCategory));
+        return new ItemModel(itemDAO.findItemsOfCategory(selectedCategory));
     }
 
     public void setCartDTO(CartDTO cartDTO) {

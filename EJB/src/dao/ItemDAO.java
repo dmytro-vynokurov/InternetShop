@@ -15,12 +15,22 @@ import java.util.List;
 @Stateless
 public class ItemDAO extends GenericDAO<Item> {
 
-    public List<Item> findPhotosOfItem(final Category category) {
+    public List<Item> findItemsOfCategory(final Category category) {
         return executeQuery(new QueryBuilder() {
             @Override
             public TypedQuery<Item> buildQuery() {
                 TypedQuery<Item> query = em.createQuery("SELECT i FROM Item i WHERE i.category=:category", Item.class);
                 return query.setParameter("category", category);
+            }
+        });
+    }
+
+    public List<Item> findItemsInRange(final int fromId, final int toId) {
+        return executeQuery(new QueryBuilder() {
+            @Override
+            public TypedQuery<Item> buildQuery() {
+                TypedQuery<Item> query = em.createQuery("SELECT i FROM Item i WHERE i.idItem<:toId AND i.idItem>:fromId", Item.class);
+                return query.setParameter("fromId", fromId).setParameter("toId", toId);
             }
         });
     }
