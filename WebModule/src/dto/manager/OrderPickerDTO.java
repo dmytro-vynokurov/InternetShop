@@ -3,6 +3,8 @@ package dto.manager;
 import dao.ItemOrderDAO;
 import dao.OrderDAO;
 import dto.cart.CartModel;
+import dto.order.OrderModel;
+import ejb.CartEJB;
 import entities.Order;
 import entities.dictionaries.OrderStatus;
 import org.primefaces.model.LazyDataModel;
@@ -10,6 +12,8 @@ import org.primefaces.model.LazyDataModel;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.model.DataModel;
+import javax.faces.model.ListDataModel;
 import javax.naming.NamingException;
 import java.io.IOException;
 import java.io.Serializable;
@@ -29,25 +33,8 @@ public class OrderPickerDTO implements Serializable {
     private static final int DEFAULT_PAGE_SIZE = 20;
 
     @EJB
-    OrderDAO orderDAO;
-    @EJB
-    ItemOrderDAO itemOrderDAO;
-    Order selectedOrder;
-
-    public void confirmOrder() throws IOException {
-        selectedOrder.setOrderStatus(OrderStatus.WF_PAYMENT);
-        navigateTo(LIST_OF_ORDERS_PAGE);
-    }
-
-    public void discardOrder() throws IOException {
-        selectedOrder.setOrderStatus(OrderStatus.CANCELED);
-        navigateTo(LIST_OF_ORDERS_PAGE);
-    }
-
-    public void backToOrders() throws IOException {
-        selectedOrder = null;
-        navigateTo(LIST_OF_ORDERS_PAGE);
-    }
+    private OrderDAO orderDAO;
+    private Order selectedOrder;
 
     public void processOrder() throws IOException {
         navigateTo(ORDER_PROCESSING_PAGE);
@@ -61,9 +48,8 @@ public class OrderPickerDTO implements Serializable {
         return orderDAO.getTotalCost(order);
     }
 
-    public CartModel getCartModel() {
-        selectedOrder.setItemOrders(itemOrderDAO.findItemOrdersOfOrder(selectedOrder));
-        return new CartModel(selectedOrder.getItemOrders());
+    public DataModel<Order> getDataModel(){
+        return new OrderModel(orderDAO.findSortedBySumWaitingForProcessing());
     }
 
     public LazyDataModel<Order> getOrderPickerModel() throws NamingException {

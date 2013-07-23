@@ -23,7 +23,7 @@ public class EmailValidator implements Validator {
     @Override
     public void validate(FacesContext facesContext, UIComponent uiComponent, Object o) throws ValidatorException {
         System.out.println("Validating email");
-        if (o == null) return;
+        if (emptyParameter(o)) return;
         String field = (String) o;
 
         Pattern pattern = Pattern.compile(EMAIL_PATTERN);
@@ -35,5 +35,9 @@ public class EmailValidator implements Validator {
             FacesContext.getCurrentInstance().addMessage(null, msg);
             throw new ValidatorException(msg);
         }
+    }
+
+    private boolean emptyParameter(Object o) {
+        return (o == null)||("".equals(o));
     }
 }

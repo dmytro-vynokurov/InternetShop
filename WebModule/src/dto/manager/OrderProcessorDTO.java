@@ -1,12 +1,16 @@
 package dto.manager;
 
+import dao.ItemOrderDAO;
 import dao.OrderDAO;
 import dto.cart.CartModel;
 import ejb.CartEJB;
+import entities.Order;
 import entities.dictionaries.OrderStatus;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import java.io.IOException;
 import java.io.Serializable;
@@ -23,19 +27,32 @@ import static dto.service.Util.navigateTo;
 @ViewScoped
 public class OrderProcessorDTO implements Serializable {
     @EJB
-    CartEJB cartEJB;
+    private CartEJB cartEJB;
     @EJB
-    OrderDAO orderDAO;
+    private OrderDAO orderDAO;
+    @EJB
+    private ItemOrderDAO itemOrderDAO;
+    @ManagedProperty(value = "#{orderPickerDTO}")
+    private OrderPickerDTO orderPickerDTO;
+
+    @PostConstruct
+    public void initializeCartEJB(){
+        cartEJB.setOrder(orderPickerDTO.getSelectedOrder());
+    }
 
     public void confirmOrder() throws IOException {
-        cartEJB.getOrder().setOrderStatus(OrderStatus.WF_PAYMENT);
-        orderDAO.update(cartEJB.getOrder());
+        Order order=cartEJB.getOrder();
+        order.setOrderStatus(OrderStatus.WF_PAYMENT);
+        System.out.println("Order confirmed: "+order);
+        orderDAO.update(order);
         navigateTo(LIST_OF_ORDERS_PAGE);
     }
 
     public void discardOrder() throws IOException {
-        cartEJB.getOrder().setOrderStatus(OrderStatus.CANCELED);
-        orderDAO.update(cartEJB.getOrder());
+        Order order=cartEJB.getOrder();
+        order.setOrderStatus(OrderStatus.CANCELED);
+        System.out.println("Order discarded: "+order);
+        orderDAO.update(order);
         navigateTo(LIST_OF_ORDERS_PAGE);
     }
 
@@ -48,6 +65,21 @@ public class OrderProcessorDTO implements Serializable {
     }
 
     public CartModel getCartModel() {
-        return new CartModel(cartEJB.getOrder().getItemOrders());
+        Order order=cartEJB.getOrder();
+        order=orderDAO.update(order);
+        cartEJB.setOrder(order);
+        return new CartModel(order.getItemOrders());
+    }
+
+    public Order getOrder(){
+        return cartEJB.getOrder();
+    }
+
+    public void setOreder(Order order){
+        cartEJB.setOrder(order);
+    }
+
+    public void setOrderPickerDTO(OrderPickerDTO orderPickerDTO) {
+        this.orderPickerDTO = orderPickerDTO;
     }
 }

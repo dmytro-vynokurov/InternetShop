@@ -68,6 +68,15 @@
         </navigation-case>
     </navigation-rule>
 
+    <navigation-rule>
+        <from-view-id>/manager/*</from-view-id>
+        <navigation-case>
+            <from-outcome>order_processing</from-outcome>
+            <to-view-id>/manager/order_processing.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+
     <converter>
         <converter-for-class>java.lang.Enum</converter-for-class>
         <converter-class>javax.faces.convert.EnumConverter</converter-class>

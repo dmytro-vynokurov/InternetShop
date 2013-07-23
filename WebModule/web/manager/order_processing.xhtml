@@ -27,30 +27,30 @@
                 <div style="float:left">
                     <p:panelGrid columns="2">
                         <h:outputText value="Payment type:"/>
-                        <h:selectOneMenu value="#{orderPickerDTO.selectedOrder.paymentType}">
+                        <h:selectOneMenu value="#{orderProcessorDTO.order.paymentType}">
                             <f:selectItems value="#{dictionaryDTO.paymentTypes}"/>
                         </h:selectOneMenu>
 
                         <h:outputText value="Delivery type:"/>
-                        <h:selectOneMenu value="#{orderPickerDTO.selectedOrder.deliveryType}">
+                        <h:selectOneMenu value="#{orderProcessorDTO.order.deliveryType}">
                             <f:selectItems value="#{dictionaryDTO.deliveryTypes}"/>
                         </h:selectOneMenu>
 
                         <h:outputText value="Your name:"/>
-                        <h:outputText value="#{orderPickerDTO.selectedOrder.userName}"/>
+                        <h:outputText value="#{orderProcessorDTO.order.userName}"/>
 
                         <h:outputText value="Phone:"/>
-                        <h:outputText value="#{orderPickerDTO.selectedOrder.userPhone}"/>
+                        <h:outputText value="#{orderProcessorDTO.order.userPhone}"/>
 
                         <h:outputText value="Email:"/>
-                        <h:outputText value="#{orderPickerDTO.selectedOrder.userEmail}"/>
+                        <h:outputText value="#{orderProcessorDTO.order.userEmail}"/>
 
                         <h:outputText value="Comment"/>
                         <h:outputText value="#{cartOrderDetailsDTO.comment}"/>
                     </p:panelGrid>
                 </div>
                 <div style="float:left">
-                    <p:dataTable value="#{orderPickerDTO.cartModel}" var="entry" id="entries">
+                    <p:dataTable value="#{orderProcessorDTO.cartModel}" var="entry" id="entries">
                         <p:column headerText="Item">
                             #{entry.item.itemName}
                         </p:column>
@@ -72,13 +72,13 @@
                     </p:dataTable>
 
                     <div align="right">
-                        <h3>Total: <h:outputText id="total_price" value="#{orderPickerDTO.totalPrice}"/></h3>
+                        <h3>Total: <h:outputText id="total_price" value="#{orderProcessorDTO.totalPrice}"/></h3>
                     </div>
                 </div>
                 <div style="clear:both"/>
-                <p:commandButton value="Confirm order" action="#{orderPickerDTO.confirmOrder}"/>
-                <p:commandButton value="Discard order" action="#{orderPickerDTO.discardOrder}"/>
-                <p:commandButton value="Back to orders" action="#{orderPickerDTO.backToOrders}"/>
+                <p:commandButton value="Confirm order" action="#{orderProcessorDTO.confirmOrder}"/>
+                <p:commandButton value="Discard order" action="#{orderProcessorDTO.discardOrder}"/>
+                <p:commandButton value="Back to orders" action="#{orderProcessorDTO.backToOrders}"/>
             </h:form>
         </ui:define>
     </ui:composition>

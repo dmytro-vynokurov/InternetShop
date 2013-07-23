@@ -1,6 +1,7 @@
 package dto.item;
 
 import dao.ItemDAO;
+import entities.Category;
 import entities.Item;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
@@ -21,9 +22,16 @@ public class ItemLazyModel extends LazyDataModel<Item> {
 
     @EJB
     ItemDAO itemDAO;
+    Category category;
 
     public ItemLazyModel() throws NamingException {
         itemDAO = (ItemDAO) new InitialContext().lookup(ITEM_DAO_CONTEXT_PATH);
+        category=null;
+    }
+
+    public ItemLazyModel(Category category) throws NamingException {
+        itemDAO = (ItemDAO) new InitialContext().lookup(ITEM_DAO_CONTEXT_PATH);
+        this.category = category;
     }
 
     @Override
@@ -41,11 +49,27 @@ public class ItemLazyModel extends LazyDataModel<Item> {
 
     @Override
     public List<Item> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, String> filters) {
+        if(category==null) return loadByCategory(first,pageSize);
+        else return loadAll(first, pageSize);
+    }
+
+    private List<Item> loadAll(int first, int pageSize) {
         List<Item> result = itemDAO.findItemsInRange(first, first + pageSize);
-        System.out.println("In lazy model: " + result);
         if (getRowCount() <= 0) setRowCount(itemDAO.count().intValue());
         return result;
     }
 
+    private List<Item> loadByCategory(int first, int pageSize) {
+        List<Item> result = itemDAO.findItemsOfCategoryInRange(category,first, first + pageSize);
+        if (getRowCount() <= 0) setRowCount(itemDAO.countItemsOfCategory(category));
+        return result;
+    }
 
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 }
