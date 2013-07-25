@@ -43,7 +43,7 @@ public class ItemDTO implements Serializable {
     private Admin admin;
     private Item selectedItem;
     private boolean allItemsShown;
-    private DataModel<Item> itemModel;
+    private ItemLazyModel itemModel;
 
     private String newItemName;
     private String newManufacturer;
@@ -60,7 +60,7 @@ public class ItemDTO implements Serializable {
     @PostConstruct
     public void initialize() throws NamingException {
         allItemsShown = true;
-        itemModel = new ItemModel();
+        itemModel = new ItemLazyModel();
     }
 
     @RolesAllowed("ADMIN")
@@ -93,8 +93,8 @@ public class ItemDTO implements Serializable {
     @RolesAllowed("ADMIN")
     public void updateItem() throws IOException {
         //todo: finish updating item: add characteristics management
+        itemDAO.update(selectedItem);
         navigateTo(ITEMS_PAGE);
-        throw new UnsupportedOperationException("Not finished yet");
     }
 
     public SelectItem[] getColors() {
@@ -110,13 +110,13 @@ public class ItemDTO implements Serializable {
         return itemDAO.findAll();
     }
 
-    public DataModel<Item> getItemModel() {
+    public ItemLazyModel getItemModel() {
         return itemModel;
     }
 
-    public void viewItemsOfCategory() throws IOException {
+    public void viewItemsOfCategory() throws IOException, NamingException {
         if (categoryDTO.getSelectedCategory() != null) {
-            itemModel = new ItemModel(itemDAO.findItemsOfCategory(categoryDTO.getSelectedCategory()));
+            itemModel = new ItemLazyModel(categoryDTO.getSelectedCategory());
             allItemsShown = false;
             admin.setPageIndex(Admin.ITEMS_INDEX);
             navigateTo(ITEMS_PAGE);
@@ -126,12 +126,11 @@ public class ItemDTO implements Serializable {
     }
 
     public void viewCatalogue() throws IOException {
-        itemModel = new ItemModel((itemDAO.findItemsOfCategory(categoryDTO.getSelectedCategory())));
         navigateTo(NavigationShop.CATALOGUE_PAGE);
     }
 
-    public void showAll() throws IOException {
-        itemModel = new ItemModel(itemDAO.findAll());
+    public void showAll() throws IOException, NamingException {
+        itemModel=new ItemLazyModel();
         allItemsShown = true;
         navigateTo(ITEMS_PAGE);
     }

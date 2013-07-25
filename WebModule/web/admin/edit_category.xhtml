@@ -69,10 +69,6 @@
 
                         <p:ajax event="cellEdit" listener="#{characteristicTypeDTO.updateCharacteristicType}"/>
 
-                        <p:column headerText="ID">
-                            #{characteristic.idCharacteristicType}
-                        </p:column>
-
                         <p:column headerText="Name">
                             <p:cellEditor>
                                 <f:facet name="output">
@@ -107,9 +103,9 @@
             <h:form id="confirm_delete_form">
                 <p:dialog id="confirm_delete_CT"
                           widgetVar="confirmDialog"
-                          message="Are you sure you want to delete characteristic type and all characteristics related to it?"
                           global="true">
                     <div align="center">
+                        Are you sure you want to delete characteristic type and all characteristics related to it?
                         <p:commandButton value="Yes"
                                          type="submit"
                                          styleClass="ui-confirmation-yes"

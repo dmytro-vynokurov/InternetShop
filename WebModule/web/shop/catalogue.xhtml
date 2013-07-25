@@ -9,6 +9,7 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -21,27 +22,40 @@
     <ui:composition template="/templates/common_layout.xhtml">
         <ui:define name="content">
             <h2>#{catalogueDTO.selectedCategory.categoryName}</h2>
-            <h:form id="form_catalogue">
-                <p:dataTable id="items_table" var="item" value="#{catalogueDTO.itemModel}"
-                             selection="#{catalogueDTO.selectedItem}" selectionMode="single"
-                             paginator="true" rows="20" rowsPerPageTemplate="20,30,40" lazy="true"
-                             paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink}
+
+            <div style="float: left">
+                <h:form>
+                    <p:dataTable id="prices" var="priceRange" value="#{catalogueDTO.priceRanges}">
+                        <f:facet name="header">Price range</f:facet>
+                        <p:column>
+                            <p:selectBooleanCheckbox
+                                    value="#{priceRange.checked}"/> #{priceRange.lower} - #{priceRange.upper}
+                        </p:column>
+                    </p:dataTable>
+                    <p:commandButton value="Update prices" action="#{catalogueDTO.updatePrices}"/>
+                </h:form>
+            </div>
+            <div style="overflow: hidden">
+                <h:form id="form_catalogue">
+                    <p:dataTable id="items_table" var="item" value="#{catalogueDTO.itemModel}"
+                                 selection="#{catalogueDTO.selectedItem}" selectionMode="single"
+                                 paginator="true" rows="20" rowsPerPageTemplate="20,30,40" lazy="true"
+                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink}
                                         {CurrentPageReport} {NextPageLink} {LastPageLink}">
-                    <p:ajax event="rowSelect" listener="#{catalogueDTO.viewItem}"/>
+                        <p:ajax event="rowSelect" action="#{catalogueDTO.viewItem}"/>
+                        <p:column>
+                            <!--todo load photos from DB not from a file-->
+                            <div style="float:left"><p:graphicImage id="image" value="/nophoto.jpg"/></div>
+                            <div style="float:right">
+                                <p>#{item.itemName}</p>
 
-                    <p:column>
-                        <!--todo load photos from DB not from a file-->
-                        <div style="float:left"><p:graphicImage id="image" value="/nophoto.jpg"/></div>
-                        <div style="float:right">
-                            <p>#{item.itemName}</p>
-
-                            <p>#{item.price}</p>
-                        </div>
-                    </p:column>
-
-                </p:dataTable>
-
-            </h:form>
+                                <p>#{item.price}</p>
+                            </div>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </div>
+            <div style="clear:both"/>
         </ui:define>
     </ui:composition>
 </h:body>

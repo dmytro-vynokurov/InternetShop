@@ -113,9 +113,6 @@
                             Characteristics
                         </f:facet>
                         <p:ajax event="cellEdit" listener="#{characteristicDTO.updateCharacteristic}"/>
-                        <p:column headerText="ID">
-                            #{characteristic.idCharacteristic}
-                        </p:column>
                         <p:column headerText="Value">
                             <p:cellEditor>
                                 <f:facet name="output">

@@ -1,6 +1,7 @@
 package dto.item;
 
 import dao.ItemDAO;
+import entities.util.PriceRange;
 import entities.Category;
 import entities.Item;
 import org.primefaces.model.LazyDataModel;
@@ -23,15 +24,22 @@ public class ItemLazyModel extends LazyDataModel<Item> {
     @EJB
     ItemDAO itemDAO;
     Category category;
+    List<PriceRange> priceRanges;
 
     public ItemLazyModel() throws NamingException {
         itemDAO = (ItemDAO) new InitialContext().lookup(ITEM_DAO_CONTEXT_PATH);
-        category=null;
+        category = null;
     }
 
     public ItemLazyModel(Category category) throws NamingException {
         itemDAO = (ItemDAO) new InitialContext().lookup(ITEM_DAO_CONTEXT_PATH);
         this.category = category;
+    }
+
+    public ItemLazyModel(Category category, List<PriceRange> priceRanges) throws NamingException {
+        itemDAO = (ItemDAO) new InitialContext().lookup(ITEM_DAO_CONTEXT_PATH);
+        this.category = category;
+        this.priceRanges = priceRanges;
     }
 
     @Override
@@ -49,8 +57,8 @@ public class ItemLazyModel extends LazyDataModel<Item> {
 
     @Override
     public List<Item> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, String> filters) {
-        if(category==null) return loadByCategory(first,pageSize);
-        else return loadAll(first, pageSize);
+        if (category == null) return loadAll(first, pageSize);
+        else return loadByCategory(first, pageSize);
     }
 
     private List<Item> loadAll(int first, int pageSize) {
@@ -60,8 +68,18 @@ public class ItemLazyModel extends LazyDataModel<Item> {
     }
 
     private List<Item> loadByCategory(int first, int pageSize) {
-        List<Item> result = itemDAO.findItemsOfCategoryInRange(category,first, first + pageSize);
-        if (getRowCount() <= 0) setRowCount(itemDAO.countItemsOfCategory(category));
+        if (PriceRange.priceFilteringEnabled(priceRanges)) {
+            return loadByCategoryWithFilters(first, pageSize);
+        } else {
+            List<Item> result = itemDAO.findItemsOfCategoryInRange(category, first, first + pageSize);
+            setRowCount(itemDAO.countItemsOfCategory(category).intValue());
+            return result;
+        }
+    }
+
+    private List<Item> loadByCategoryWithFilters(int first, int pageSize){
+        List<Item> result = itemDAO.findItemsOfCategoryInRangeWithPriceFilters(category, priceRanges, first, first + pageSize);
+        setRowCount(itemDAO.countItemsOfCategoryWithFilters(category, priceRanges).intValue());
         return result;
     }
 
