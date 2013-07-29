@@ -27,7 +27,7 @@
 
                 <p:panelGrid columns="2" style="padding-left: 100px;padding-top: 40px">
                     <h:outputLabel value="Category:"/>
-                    <p:selectOneMenu value="#{itemDTO.newCategory}"
+                    <h:selectOneMenu value="#{itemDTO.newCategory}"
                                      converter="CategoryConverter"
                                      panelStyle="width:150px"
                                      effect="fade"
@@ -46,7 +46,7 @@
                             #{newCategory.categoryName}
                         </p:column>
                         <f:converter converterId="CategoryConverter"/>
-                    </p:selectOneMenu>
+                    </h:selectOneMenu>
 
                     <h:outputLabel value="Item name:"/>
                     <h:inputText value="#{itemDTO.newItemName}" required="true">

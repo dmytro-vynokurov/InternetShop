@@ -1,7 +1,5 @@
 package dto.validators;
 
-import dto.category.CategoryConverter;
-
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -11,17 +9,20 @@ import javax.faces.validator.ValidatorException;
 
 /**
  * User: Dmitry
- * Date: 7/14/13
- * Time: 2:15 PM
+ * Date: 7/28/13
+ * Time: 7:50 PM
  */
-@FacesValidator(value = "NameValidator")
-public class NameValidator implements Validator {
+@FacesValidator(value="ItemQuantityValidator")
+public class ItemQuantityValidator implements Validator {
+    private static final String NEGATIVE_QUANTITY_MESSAGE = "Item quantity cannot be negative";
 
     @Override
     public void validate(FacesContext facesContext, UIComponent uiComponent, Object o) throws ValidatorException {
-        String name = (String) o;
-        if (name.contains(CategoryConverter.SPLITTER)) {
-            FacesMessage message = new FacesMessage("Name cannot contain " + CategoryConverter.SPLITTER);
+        Number number=(Number)o;
+        int quantity=number.intValue();
+
+        if(quantity<0){
+            FacesMessage message = new FacesMessage(NEGATIVE_QUANTITY_MESSAGE);
             throw new ValidatorException(message);
         }
     }

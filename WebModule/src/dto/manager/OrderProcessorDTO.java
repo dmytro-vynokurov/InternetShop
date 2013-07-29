@@ -36,22 +36,22 @@ public class OrderProcessorDTO implements Serializable {
     private OrderPickerDTO orderPickerDTO;
 
     @PostConstruct
-    public void initializeCartEJB(){
+    public void initializeCartEJB() {
         cartEJB.setOrder(orderPickerDTO.getSelectedOrder());
     }
 
     public void confirmOrder() throws IOException {
-        Order order=cartEJB.getOrder();
+        Order order = cartEJB.getOrder();
         order.setOrderStatus(OrderStatus.WF_PAYMENT);
-        System.out.println("Order confirmed: "+order);
+        System.out.println("Order confirmed: " + order);
         orderDAO.update(order);
         navigateTo(LIST_OF_ORDERS_PAGE);
     }
 
     public void discardOrder() throws IOException {
-        Order order=cartEJB.getOrder();
+        Order order = cartEJB.getOrder();
         order.setOrderStatus(OrderStatus.CANCELED);
-        System.out.println("Order discarded: "+order);
+        System.out.println("Order discarded: " + order);
         orderDAO.update(order);
         navigateTo(LIST_OF_ORDERS_PAGE);
     }
@@ -65,17 +65,17 @@ public class OrderProcessorDTO implements Serializable {
     }
 
     public CartModel getCartModel() {
-        Order order=cartEJB.getOrder();
-        order=orderDAO.update(order);
+        Order order = cartEJB.getOrder();
+        order = orderDAO.update(order);
         cartEJB.setOrder(order);
         return new CartModel(order.getItemOrders());
     }
 
-    public Order getOrder(){
+    public Order getOrder() {
         return cartEJB.getOrder();
     }
 
-    public void setOreder(Order order){
+    public void setOreder(Order order) {
         cartEJB.setOrder(order);
     }
 

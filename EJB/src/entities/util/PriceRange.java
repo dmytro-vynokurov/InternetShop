@@ -8,11 +8,10 @@ import java.util.List;
  * Date: 7/23/13
  * Time: 2:53 PM
  */
-public class PriceRange implements Serializable{
+public class PriceRange implements Serializable {
     private double lower;
     private double upper;
-    private boolean checked=false;
-
+    private boolean checked = false;
 
 
     public static boolean priceFilteringEnabled(List<PriceRange> priceRanges) {
@@ -33,7 +32,7 @@ public class PriceRange implements Serializable{
     public PriceRange() {
     }
 
-    public PriceRange(double lower,double upper) {
+    public PriceRange(double lower, double upper) {
         this.upper = upper;
         this.lower = lower;
     }

@@ -1,16 +1,9 @@
 package dao;
 
 import entities.Order;
-import entities.dictionaries.OrderStatus;
 
 import javax.ejb.Stateless;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-import javax.persistence.metamodel.EntityType;
-import javax.persistence.metamodel.Metamodel;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -29,18 +22,16 @@ public class OrderDAO extends GenericDAO<Order> {
                     "from\n" +
                     "  (    select o.id_order,o.user_name,o.user_phone,o.user_email,o.order_comment,\n" +
                     "        o.delivery_type,o.payment_type,o.order_status,\n" +
-                    "        dense_rank() over (partition by o.id_order order by sum(io.quantity*i.price)) rnk\n" +
+                    "        dense_rank() over (partition by o.id_order order by sum(io.quantity*io.price)) rnk\n" +
                     "      from (ORDER1 o left join item_order io on o.id_order=io.id_order)\n" +
-                    "        left join Item i on i.id_item=io.id_item\n" +
                     "      where o.order_status='WF_PROCESSING'\n" +
                     "      group by o.id_order,o.user_name,o.user_phone,o.user_email,o.order_comment,\n" +
                     "        o.delivery_type,o.payment_type,o.order_status)o\n" +
                     "order by rnk";
 
-    private final static String TOTAL_COST_QUERY =
-            "select sum(io.quantity*i.price) as DV\n" +
+    private final static String TOTAL_COST_QUERY1 =
+            "select sum(io.quantity*io.price) as DV\n" +
                     "from (ORDER1 o join item_order io on o.id_order=io.id_order)\n" +
-                    "     join Item i on i.id_item=io.id_item\n" +
                     "where o.id_order=:orderID";
 
     private final static String SORTED_BY_SUM_WAITING_FOR_PROCESSING_IN_RANGE =
@@ -50,9 +41,8 @@ public class OrderDAO extends GenericDAO<Order> {
                     "from\n" +
                     "  (    select o.id_order,o.user_name,o.user_phone,o.user_email,o.order_comment,\n" +
                     "        o.delivery_type,o.payment_type,o.order_status,\n" +
-                    "        dense_rank() over (partition by o.id_order order by sum(io.quantity*i.price)) rnk\n" +
+                    "        dense_rank() over (partition by o.id_order order by sum(io.quantity*io.price)) rnk\n" +
                     "      from (ORDER1 o left join item_order io on o.id_order=io.id_order)\n" +
-                    "        left join Item i on i.id_item=io.id_item\n" +
                     "      where o.order_status='WF_PROCESSING'\n" +
                     "      group by o.id_order,o.user_name,o.user_phone,o.user_email,o.order_comment,\n" +
                     "        o.delivery_type,o.payment_type,o.order_status)o\n" +
@@ -67,19 +57,15 @@ public class OrderDAO extends GenericDAO<Order> {
                     "where ID_ORDER=:idOrder";
 
     public List<Order> findSortedBySumWaitingForProcessing() {
-        return executeQuery(new QueryBuilder() {
-            @Override
-            public Query buildQuery() {
-                return em.createNativeQuery(SORTED_BY_SUM_WAITING_FOR_PROCESSING_QUERY, Order.class);
-            }
-        });
+        return em.createNativeQuery(SORTED_BY_SUM_WAITING_FOR_PROCESSING_QUERY, Order.class)
+                .getResultList();
     }
 
     public double getTotalCost(Order order) {
-        Query query = em.createNativeQuery(TOTAL_COST_QUERY);
+        Query query = em.createNativeQuery(TOTAL_COST_QUERY1);
         query.setParameter("orderID", order.getIdOrder());
-        BigDecimal result=(BigDecimal) query.getSingleResult();
-        return (result==null)?0:result.doubleValue();
+        BigDecimal result = (BigDecimal) query.getSingleResult();
+        return (result == null) ? 0 : result.doubleValue();
     }
 
     @Override

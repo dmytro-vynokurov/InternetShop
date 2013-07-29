@@ -18,12 +18,11 @@
     <ui:composition template="/templates/admin_layout.xhtml">
         <ui:define name="content">
             <h:form id="form_list_orders">
-                <p:dataTable id="orders" var="order" value="#{orderDTO.orders}"
+                <p:dataTable id="orders" var="order" value="#{orderPickerDTO.orderPickerModel}"
                              paginator="true" rows="20" rowsPerPageTemplate="20,30,40" lazy="true"
                              paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink}
-                                        {CurrentPageReport} {NextPageLink} {LastPageLink}">
-
-                    <p:ajax event="rowSelect" listener="#{orderPickerDTO.processOrder}"/>
+                                        {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                        >
 
                     <p:column headerText="ID">
                         #{order.idOrder}

@@ -7,14 +7,13 @@ import entities.ItemOrder;
 import entities.Order;
 
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import java.io.IOException;
 import java.io.Serializable;
 
 import static dto.service.NavigationShop.REGISTER_ORDER_PAGE;
-import static dto.service.Util.navigateTo;
 
 /**
  * User: Dmitry
@@ -27,15 +26,19 @@ public class CartDTO implements Serializable {
 
     @EJB
     CartEJB cartEJB;
+    @ManagedProperty(value = "#{cartOrderDetailsDTO}")
+    private CartOrderDetailsDTO cartOrderDetailsDTO;
     ItemOrder selectedEntry;
 
     public void addItem(Item item) {
         cartEJB.addItem(item);
-        Util.createMessage(item.getItemName()+" added to the cart");
+        Util.createMessage(cartEJB.findEntry(item).getQuantity()+" "+item.getItemName()+ " in the cart");
     }
 
-    public void confirmOrder() throws IOException {
-        navigateTo(REGISTER_ORDER_PAGE);
+    public String confirmOrder() throws IOException {
+        System.out.println("When moving to confirming order\t"+cartEJB.getOrder().getItemOrders());
+        cartOrderDetailsDTO.setCartEJB(cartEJB);
+        return REGISTER_ORDER_PAGE;
     }
 
     public double getTotalPrice() {
@@ -51,6 +54,8 @@ public class CartDTO implements Serializable {
     }
 
     public void setCurrentOrder(Order currentOrder) {
+        System.out.println("Setting cartEJB order from cartDTO - itemOrders:"+
+                currentOrder.getItemOrders());
         cartEJB.setOrder(currentOrder);
     }
 
@@ -61,4 +66,10 @@ public class CartDTO implements Serializable {
     public void setSelectedEntry(ItemOrder selectedEntry) {
         this.selectedEntry = selectedEntry;
     }
+
+    public void setCartOrderDetailsDTO(CartOrderDetailsDTO cartOrderDetailsDTO) {
+        this.cartOrderDetailsDTO = cartOrderDetailsDTO;
+    }
 }
+
+

@@ -11,7 +11,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
         >
 
 <h:head>
@@ -22,6 +22,8 @@
     <ui:composition template="/templates/common_layout.xhtml">
         <ui:define name="content">
             <h:form id="form">
+                <p:growl id="growl"/>
+
                 <h2>Cart</h2>
                 <p:dataTable value="#{cartDTO.cartModel}" var="entry" id="entries">
                     <p:column headerText="Item">
@@ -30,7 +32,8 @@
 
                     <p:column headerText="Quantity">
                         <p:spinner value="#{entry.quantity}" min="0" max="#{entry.item.quantity}">
-                            <p:ajax update=":form:total_price :form:entries" process="@this"/>
+                            <p:ajax update=":form:total_price :form:entries :form:growl" process="@this"/>
+                            <f:validator validatorId="ItemQuantityValidator"/>
                         </p:spinner>
                     </p:column>
 

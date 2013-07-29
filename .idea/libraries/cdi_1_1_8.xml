@@ -1,0 +1,30 @@
+<component name="libraryTable">
+  <library name="cdi-1.1.8" type="CDI">
+    <properties version="1.1.8" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/cdi-api.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/weld-api.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/weld-core.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/weld-se.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/weld-se-core.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/weld-servlet.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/weld-servlet-core.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/weld-spi.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/lib/cdi-api-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/weld-api-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/weld-spi-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/lib/cdi-api-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/weld-api-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/weld-core-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/weld-se-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/weld-se-core-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/weld-servlet-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/weld-servlet-core-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/weld-spi-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

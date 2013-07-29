@@ -27,6 +27,7 @@
     <orderEntry type="library" name="jsf/primefaces-3.4.1" level="project" />
     <orderEntry type="module" module-name="EJB" />
     <orderEntry type="library" name="Java EE 6-3.1" level="project" />
+    <orderEntry type="library" name="cdi-1.1.8" level="project" />
   </component>
 </module>
 

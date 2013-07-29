@@ -4,7 +4,6 @@ import entities.Characteristic;
 import entities.Item;
 
 import javax.ejb.Stateless;
-import javax.persistence.TypedQuery;
 import java.util.List;
 
 /**
@@ -14,16 +13,13 @@ import java.util.List;
  */
 @Stateless
 public class CharacteristicDAO extends GenericDAO<Characteristic> {
+    private static final String FIND_CHARACTERISTICS_OF_ITEM = "findCharacteristicsOfItem";
 
     public List<Characteristic> findCharacteristicsOfItem(final Item item) {
-        return executeQuery(new QueryBuilder() {
-            @Override
-            public TypedQuery<Characteristic> buildQuery() {
-                TypedQuery<Characteristic> query = em.createQuery(
-                        "SELECT ct FROM Characteristic ct WHERE ct.item=:item", Characteristic.class);
-                return query.setParameter("item", item);
-            }
-        });
+        return em.createNamedQuery(FIND_CHARACTERISTICS_OF_ITEM, Characteristic.class)
+                .setParameter("item", item)
+                .getResultList();
+
     }
 
     @Override

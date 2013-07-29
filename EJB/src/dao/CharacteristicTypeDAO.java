@@ -14,15 +14,12 @@ import java.util.List;
  */
 @Stateless
 public class CharacteristicTypeDAO extends GenericDAO<CharacteristicType> {
+    private static final String FIND_CHARACTERISTIC_TYPES_OF_CATEGORY="findCharacteristicTypesOfCategory";
 
     public List<CharacteristicType> findCharacteristicTypesOfCategory(final Category category) {
-        return executeQuery(new QueryBuilder() {
-            @Override
-            public TypedQuery<CharacteristicType> buildQuery() {
-                TypedQuery<CharacteristicType> query = em.createQuery("SELECT ct FROM CharacteristicType ct WHERE ct.category=:category", CharacteristicType.class);
-                return query.setParameter("category", category);
-            }
-        });
+        return em.createNamedQuery(FIND_CHARACTERISTIC_TYPES_OF_CATEGORY, CharacteristicType.class)
+                .setParameter("category", category)
+                .getResultList();
     }
 
     @Override

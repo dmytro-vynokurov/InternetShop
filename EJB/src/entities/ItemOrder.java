@@ -11,6 +11,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "ITEM_ORDER", schema = "INTERNETSHOP", catalog = "")
+@NamedQuery(name="findItemOrdersOfOrder",query = "SELECT io FROM ItemOrder io WHERE io.order=:order")
 public class ItemOrder implements Serializable {
     @Column(name = "QUANTITY", nullable = false, insertable = true, updatable = true, length = 22, precision = 0)
     @Basic
@@ -23,6 +24,19 @@ public class ItemOrder implements Serializable {
     @ManyToOne
     @JoinColumn(name = "ID_ORDER", referencedColumnName = "ID_ORDER", nullable = false)
     private Order order;
+    @Column(name="PRICE",nullable = false,length = 8,precision = 2)
+    @Basic
+    private double price;
+
+    public ItemOrder() {
+    }
+
+    public ItemOrder(Item item, Order order,int quantity, double price) {
+        this.quantity = quantity;
+        this.item = item;
+        this.order = order;
+        this.price = price;
+    }
 
     public int getQuantity() {
         return quantity;
@@ -32,25 +46,38 @@ public class ItemOrder implements Serializable {
         this.quantity = quantity;
     }
 
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
     @Override
-    public final boolean equals(Object o) {
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof ItemOrder)) return false;
 
         ItemOrder itemOrder = (ItemOrder) o;
 
+        if (Double.compare(itemOrder.price, price) != 0) return false;
         if (quantity != itemOrder.quantity) return false;
-        if (item != null ? !item.equals(itemOrder.item) : itemOrder.item != null) return false;
-        if (order != null ? !order.equals(itemOrder.order) : itemOrder.order != null) return false;
+        if (!item.equals(itemOrder.item)) return false;
+        if (!order.equals(itemOrder.order)) return false;
 
         return true;
     }
 
     @Override
-    public final int hashCode() {
-        int result = 31 + quantity;
-        result = 31 * result + (item != null ? item.hashCode() : 0);
-        result = 31 * result + (order != null ? order.hashCode() : 0);
+    public int hashCode() {
+        int result;
+        long temp;
+        result = quantity;
+        result = 31 * result + item.hashCode();
+        result = 31 * result + order.hashCode();
+        temp = Double.doubleToLongBits(price);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
     }
 
@@ -58,8 +85,9 @@ public class ItemOrder implements Serializable {
     public String toString() {
         return "ItemOrder{" +
                 "quantity=" + quantity +
-                ", item=" + item +
-                ", order=" + order +
+                ", price=" + price +
+                ", item=" + item.getItemName() +
+                ", order=" + order.getIdOrder() +
                 '}';
     }
 

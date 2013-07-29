@@ -9,6 +9,7 @@ import entities.dictionaries.PaymentType;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import java.io.IOException;
 import java.io.Serializable;
 
@@ -17,10 +18,10 @@ import java.io.Serializable;
  * Date: 7/22/13
  * Time: 1:40 AM
  */
+@SessionScoped
 @ManagedBean(name = "cartOrderDetailsDTO")
 public class CartOrderDetailsDTO implements Serializable {
 
-    @EJB
     private CartEJB cartEJB;
 
     private PaymentType paymentType;
@@ -42,6 +43,8 @@ public class CartOrderDetailsDTO implements Serializable {
         order.setOrderStatus(OrderStatus.WF_PROCESSING);
 
         System.out.println("Order: " + order);
+
+        System.out.println("Items in order: "+order.getItemOrders());
 
         cartEJB.registerOrder();
 
@@ -95,4 +98,9 @@ public class CartOrderDetailsDTO implements Serializable {
     public void setComment(String comment) {
         this.comment = comment;
     }
+
+    public void setCartEJB(CartEJB cartEJB) {
+        this.cartEJB = cartEJB;
+    }
+
 }

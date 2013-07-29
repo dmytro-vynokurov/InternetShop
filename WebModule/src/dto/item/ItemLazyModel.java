@@ -1,9 +1,9 @@
 package dto.item;
 
 import dao.ItemDAO;
-import entities.util.PriceRange;
 import entities.Category;
 import entities.Item;
+import entities.util.PriceRange;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
@@ -77,7 +77,7 @@ public class ItemLazyModel extends LazyDataModel<Item> {
         }
     }
 
-    private List<Item> loadByCategoryWithFilters(int first, int pageSize){
+    private List<Item> loadByCategoryWithFilters(int first, int pageSize) {
         List<Item> result = itemDAO.findItemsOfCategoryInRangeWithPriceFilters(category, priceRanges, first, first + pageSize);
         setRowCount(itemDAO.countItemsOfCategoryWithFilters(category, priceRanges).intValue());
         return result;

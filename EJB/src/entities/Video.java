@@ -9,6 +9,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "VIDEO", catalog = "", schema = "INTERNETSHOP")
+@NamedQuery(name="findVideosOfItem",query = "SELECT v FROM Video v WHERE v.item=:item")
 public final class Video {
     @Column(name = "ID_VIDEO", nullable = false, insertable = true, updatable = true, length = 6, precision = 0)
     @Id

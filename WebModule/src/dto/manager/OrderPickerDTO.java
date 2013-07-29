@@ -1,24 +1,16 @@
 package dto.manager;
 
-import dao.ItemOrderDAO;
 import dao.OrderDAO;
-import dto.cart.CartModel;
-import dto.order.OrderModel;
-import ejb.CartEJB;
 import entities.Order;
-import entities.dictionaries.OrderStatus;
 import org.primefaces.model.LazyDataModel;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.model.DataModel;
-import javax.faces.model.ListDataModel;
 import javax.naming.NamingException;
 import java.io.IOException;
 import java.io.Serializable;
 
-import static dto.service.NavigationManager.LIST_OF_ORDERS_PAGE;
 import static dto.service.NavigationManager.ORDER_PROCESSING_PAGE;
 import static dto.service.Util.navigateTo;
 
@@ -46,10 +38,6 @@ public class OrderPickerDTO implements Serializable {
 
     public double totalOrderPrice(Order order) {
         return orderDAO.getTotalCost(order);
-    }
-
-    public DataModel<Order> getDataModel(){
-        return new OrderModel(orderDAO.findSortedBySumWaitingForProcessing());
     }
 
     public LazyDataModel<Order> getOrderPickerModel() throws NamingException {

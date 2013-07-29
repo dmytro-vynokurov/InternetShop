@@ -24,6 +24,8 @@
     <ui:composition template="/templates/manager_layout.xhtml">
         <ui:define name="content">
             <h:form id="form_order_processing">
+                <p:growl id="growl"/>
+
                 <div style="float:left">
                     <p:panelGrid columns="2">
                         <h:outputText value="Payment type:"/>
@@ -59,6 +61,7 @@
                             <p:spinner value="#{entry.quantity}" min="0" max="#{entry.item.quantity}">
                                 <p:ajax update=":form_order_processing:total_price :form_order_processing:entries"
                                         process="@this"/>
+                                <f:validator validatorId="ItemQuantityValidator"/>
                             </p:spinner>
                         </p:column>
 
@@ -76,7 +79,8 @@
                     </div>
                 </div>
                 <div style="clear:both"/>
-                <p:commandButton value="Confirm order" action="#{orderProcessorDTO.confirmOrder}"/>
+                <p:commandButton value="Confirm order" action="#{orderProcessorDTO.confirmOrder}"
+                                 update=":form_order_processing:growl"/>
                 <p:commandButton value="Discard order" action="#{orderProcessorDTO.discardOrder}"/>
                 <p:commandButton value="Back to orders" action="#{orderProcessorDTO.backToOrders}"/>
             </h:form>

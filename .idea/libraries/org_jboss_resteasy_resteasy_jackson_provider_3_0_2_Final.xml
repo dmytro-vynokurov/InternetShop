@@ -1,0 +1,29 @@
+<component name="libraryTable">
+  <library name="org.jboss.resteasy:resteasy-jackson-provider:3.0.2.Final" type="repository">
+    <properties maven-id="org.jboss.resteasy:resteasy-jackson-provider:3.0.2.Final" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/REST/lib/resteasy-jackson-provider-3.0.2.Final.jar!/" />
+      <root url="jar://$PROJECT_DIR$/REST/lib/resteasy-jaxrs-3.0.2.Final.jar!/" />
+      <root url="jar://$PROJECT_DIR$/REST/lib/jaxrs-api-3.0.2.Final.jar!/" />
+      <root url="jar://$PROJECT_DIR$/REST/lib/slf4j-simple-1.5.8.jar!/" />
+      <root url="jar://$PROJECT_DIR$/REST/lib/slf4j-api-1.5.8.jar!/" />
+      <root url="jar://$PROJECT_DIR$/REST/lib/scannotation-1.0.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/REST/lib/javassist-3.12.1.GA.jar!/" />
+      <root url="jar://$PROJECT_DIR$/REST/lib/jsr250-api-1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/REST/lib/activation-1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/REST/lib/httpclient-4.2.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/REST/lib/httpcore-4.2.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/REST/lib/commons-logging-1.1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/REST/lib/commons-codec-1.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/REST/lib/commons-io-2.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/REST/lib/jcip-annotations-1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/REST/lib/resteasy-client-3.0.2.Final.jar!/" />
+      <root url="jar://$PROJECT_DIR$/REST/lib/jackson-core-asl-1.9.12.jar!/" />
+      <root url="jar://$PROJECT_DIR$/REST/lib/jackson-mapper-asl-1.9.12.jar!/" />
+      <root url="jar://$PROJECT_DIR$/REST/lib/jackson-jaxrs-1.9.12.jar!/" />
+      <root url="jar://$PROJECT_DIR$/REST/lib/jackson-xc-1.9.12.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

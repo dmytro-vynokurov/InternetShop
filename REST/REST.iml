@@ -23,6 +23,8 @@
     <orderEntry type="library" scope="PROVIDED" name="JBoss 7.1.1.Final" level="application_server_libraries" />
     <orderEntry type="module" module-name="EJB" />
     <orderEntry type="library" name="org.jboss.jbossas:jboss-as-resteasy:6.1.0.Final" level="project" />
+    <orderEntry type="library" name="com.google.code.gson:gson:2.2.4" level="project" />
+    <orderEntry type="library" name="org.jboss.resteasy:resteasy-jackson-provider:3.0.2.Final" level="project" />
   </component>
 </module>
 

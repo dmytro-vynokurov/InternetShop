@@ -46,4 +46,31 @@ public class CategoryREST {
         return result.toString();
     }
 
+    @GET
+    @Produces("application/json")
+    @Path("/objects")
+    public List<Category> getCategoriesAsObjects() throws NamingException {
+        categoryDAO = (CategoryDAO) new InitialContext().lookup(CATEGORY_DAO_LOOKUP_PATH);
+        List<Category> categories = categoryDAO.findAll();
+        return categories;
+    }
+
+    @GET
+    @Path("/one")
+    @Produces("application/json")
+    public Category getOneCategory() throws NamingException {
+        categoryDAO = (CategoryDAO) new InitialContext().lookup(CATEGORY_DAO_LOOKUP_PATH);
+        List<Category> categories = categoryDAO.findAll();
+        return categories.get(0);
+    }
+
+    @GET
+    @Produces("text/html")
+    @Path("/string")
+    public String getStringCategory() throws NamingException {
+        categoryDAO = (CategoryDAO) new InitialContext().lookup(CATEGORY_DAO_LOOKUP_PATH);
+        List<Category> categories = categoryDAO.findAll();
+        return categories.get(0).toString();
+    }
+
 }

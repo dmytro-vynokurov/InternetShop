@@ -13,6 +13,16 @@ import java.util.List;
  */
 @Entity
 @Table(name = "ITEM", catalog = "", schema = "INTERNETSHOP")
+@NamedQueries({
+        @NamedQuery(name = "countItemsOfCategory", query = "SELECT COUNT(*) FROM Item i WHERE i.category=:category"),
+        @NamedQuery(name = "findItemsOfCategory", query = "SELECT i FROM Item i WHERE i.category=:category"),
+        @NamedQuery(name = "findItemsInRange", query = "SELECT i FROM Item i WHERE i.idItem<:toId AND i.idItem>:fromId"),
+        @NamedQuery(name = "findItemsInCategory", query = "SELECT i FROM Item i WHERE i.category=:category"),
+        @NamedQuery(name = "findMaxPrice",query = "SELECT MAX(i.price) FROM Item i"),
+        @NamedQuery(name = "findMinPrice",query = "SELECT MIN(i.price) FROM Item i"),
+        @NamedQuery(name = "findMaxPriceOfCategory",query = "SELECT MAX(i.price) FROM Item i WHERE i.category=:category"),
+        @NamedQuery(name = "findMinPriceOfCategory",query = "SELECT MIN(i.price) FROM Item i WHERE i.category=:category")
+})
 public final class Item implements Serializable {
     @Column(name = "ID_ITEM", nullable = false, insertable = true, updatable = true, length = 6, precision = 0)
     @Id

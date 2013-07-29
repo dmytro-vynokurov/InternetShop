@@ -13,6 +13,7 @@ import java.util.List;
  */
 @Stateless
 public class CategoryDAO extends GenericDAO<Category> {
+    private static final String FIND_NOT_DELETED = "findNotDeleted";
 
     public Category getDefaultCategory() {
         return find(1);
@@ -35,6 +36,25 @@ public class CategoryDAO extends GenericDAO<Category> {
             if (isAncestor(category, temp)) result.add(temp);
         }
         return result;
+    }
+
+    public List<Category> findCategoriesWithItems(){
+        return em.createQuery("SELECT c FROM Category c WHERE EXISTS (" +
+                                        "SELECT i FROM Item i WHERE i.category=c)"
+                                ,Category.class)
+                .getResultList();
+    }
+
+    @Override
+    public List<Category> findAll() {
+        return em.createNamedQuery(FIND_NOT_DELETED, Category.class)
+                .getResultList();
+    }
+
+    @Override
+    public void remove(Category category) {
+        category.setDeleted(true);
+        em.merge(category);
     }
 
     @Override

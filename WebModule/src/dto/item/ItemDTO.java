@@ -14,7 +14,6 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import javax.faces.model.DataModel;
 import javax.faces.model.SelectItem;
 import javax.naming.NamingException;
 import java.io.IOException;
@@ -130,7 +129,7 @@ public class ItemDTO implements Serializable {
     }
 
     public void showAll() throws IOException, NamingException {
-        itemModel=new ItemLazyModel();
+        itemModel = new ItemLazyModel();
         allItemsShown = true;
         navigateTo(ITEMS_PAGE);
     }

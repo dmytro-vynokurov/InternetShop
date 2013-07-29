@@ -9,6 +9,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "Characteristic", catalog = "", schema = "INTERNETSHOP")
+@NamedQuery(name="findCharacteristicsOfItem",query="SELECT ct FROM Characteristic ct WHERE ct.item=:item")
 public final class Characteristic {
     @Column(name = "ID_CHARACTERISTIC", nullable = false, insertable = true, updatable = true, length = 6, precision = 0)
     @Id

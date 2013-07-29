@@ -29,7 +29,6 @@ public class PhoneValidator implements Validator {
         if (!matcher.matches()) {
             FacesMessage message = new FacesMessage("Phone can contain from 5 to 13 numbers only");
             message.setSeverity(FacesMessage.SEVERITY_ERROR);
-            FacesContext.getCurrentInstance().addMessage(null, message);
             throw new ValidatorException(message);
         }
     }

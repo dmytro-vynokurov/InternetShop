@@ -10,6 +10,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "CHARACTERISTIC_TYPE", schema = "INTERNETSHOP", catalog = "")
+@NamedQuery(name="findCharacteristicTypesOfCategory",query="SELECT ct FROM CharacteristicType ct WHERE ct.category=:category")
 public final class CharacteristicType {
     @Column(name = "ID_CHARACTERISTIC_TYPE", nullable = false, insertable = true, updatable = true, length = 6, precision = 0)
     @Id

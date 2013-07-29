@@ -10,6 +10,7 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "CATEGORY", catalog = "", schema = "INTERNETSHOP")
+@NamedQuery(name = "findNotDeleted", query = "SELECT C FROM Category c WHERE c.deleted=0")
 public class Category implements Serializable {
     @Column(name = "ID_CATEGORY", nullable = false, insertable = true, updatable = true, length = 6, precision = 0)
     @Id
@@ -19,21 +20,15 @@ public class Category implements Serializable {
     @Column(name = "CATEGORY_NAME", nullable = false, insertable = true, updatable = true, length = 40, precision = 0)
     @Basic
     private String categoryName;
+    @Column(name = "DELETED", nullable = false, length = 1)
+    @Basic
+    private int deleted;
     @ManyToOne
     @JoinColumn(name = "PARENT_CATEGORY_ID", referencedColumnName = "ID_CATEGORY")
     private Category parentCategory;
-//    @OneToMany(mappedBy = "parentCategory", orphanRemoval = true)
-//    private List<Category> childCategories;
-//    @OneToMany(mappedBy = "category")
-//    private transient List<CharacteristicType> characteristicTypes;
-//    @OneToMany(mappedBy = "category")
-//    private transient List<Item> items;
 
     public Category() {
         parentCategory = null;
-//        childCategories = null;
-//        characteristicTypes = null;
-//        items = null;
     }
 
     public int getIdCategory() {
@@ -50,6 +45,15 @@ public class Category implements Serializable {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
+    }
+
+    public boolean getDeleted() {
+        return deleted == 1;
+    }
+
+    public void setDeleted(boolean deleted) {
+        if (deleted) this.deleted = 1;
+        else this.deleted = 0;
     }
 
     @Override
@@ -89,28 +93,4 @@ public class Category implements Serializable {
     public void setParentCategory(Category parentCategory) {
         this.parentCategory = parentCategory;
     }
-
-//    public List<Category> getChildCategories() {
-//        return childCategories;
-//    }
-//
-//    public void setChildCategories(List<Category> childCategories) {
-//        this.childCategories = childCategories;
-//    }
-////
-//    public List<CharacteristicType> getCharacteristicTypes() {
-//        return characteristicTypes;
-//    }
-//
-//    public void setCharacteristicTypes(List<CharacteristicType> characteristicTypes) {
-//        this.characteristicTypes = characteristicTypes;
-//    }
-//
-//    public List<Item> getItems() {
-//        return items;
-//    }
-//
-//    public void setItems(List<Item> items) {
-//        this.items = items;
-//    }
 }

@@ -32,12 +32,11 @@ public class EmailValidator implements Validator {
         if (!matcher.matches()) {
             FacesMessage msg = new FacesMessage(MESSAGE_SUMMARY, MESSAGE_DETAILS);
             msg.setSeverity(FacesMessage.SEVERITY_ERROR);
-            FacesContext.getCurrentInstance().addMessage(null, msg);
             throw new ValidatorException(msg);
         }
     }
 
     private boolean emptyParameter(Object o) {
-        return (o == null)||("".equals(o));
+        return (o == null) || ("".equals(o));
     }
 }

@@ -8,8 +8,9 @@ import java.sql.Blob;
  * Date: 6/20/13
  * Time: 5:19 PM
  */
-@Entity
+@Entity(name = "Photo")
 @Table(name = "PHOTO", catalog = "", schema = "INTERNETSHOP")
+@NamedQuery(name="findPhotosOfItem",query="SELECT p FROM Photo p WHERE p.item=:item")
 public final class Photo {
     @Column(name = "ID_PHOTO", nullable = false, insertable = true, updatable = true, length = 6, precision = 0)
     @Id

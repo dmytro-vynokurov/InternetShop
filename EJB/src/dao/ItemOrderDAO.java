@@ -4,7 +4,6 @@ import entities.ItemOrder;
 import entities.Order;
 
 import javax.ejb.Stateless;
-import javax.persistence.TypedQuery;
 import java.util.List;
 
 /**
@@ -14,15 +13,12 @@ import java.util.List;
  */
 @Stateless
 public class ItemOrderDAO extends GenericDAO<ItemOrder> {
+    private static final String FIND_ITEM_ORDERS_OF_ORDER = "findItemOrdersOfOrder";
 
     public List<ItemOrder> findItemOrdersOfOrder(final Order order) {
-        return executeQuery(new QueryBuilder() {
-            @Override
-            public TypedQuery<ItemOrder> buildQuery() {
-                TypedQuery<ItemOrder> query = em.createQuery("SELECT io FROM ItemOrder io WHERE io.order=:order", ItemOrder.class);
-                return query.setParameter("order", order);
-            }
-        });
+        return em.createNamedQuery(FIND_ITEM_ORDERS_OF_ORDER, ItemOrder.class)
+                .setParameter("order", order)
+                .getResultList();
     }
 
     @Override

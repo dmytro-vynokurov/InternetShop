@@ -84,8 +84,8 @@ public class CatalogueDTO implements Serializable {
 
     public String getVideo() {
         System.out.println("Getting video of item");
-        System.out.println("Selected category: "+selectedCategory.getCategoryName());
-        System.out.println("Selected item: "+selectedItem==null?"null":selectedItem.getItemName());
+        System.out.println("Selected category: " + selectedCategory.getCategoryName());
+        System.out.println("Selected item: " + ((selectedItem == null) ? "null" : selectedItem.getItemName()));
         System.out.println(videoDAO.findVideoOfItem(selectedItem).getUrl());
         return videoDAO.findVideoOfItem(selectedItem).getUrl();
     }
@@ -107,6 +107,10 @@ public class CatalogueDTO implements Serializable {
         return new CategoryModel(categoryDAO.findAll());
     }
 
+    public CategoryModel getCategoriesWithItems() {
+        return new CategoryModel(categoryDAO.findCategoriesWithItems());
+    }
+
     public List<Characteristic> getCharacteristics() {
         return characteristicDAO.findCharacteristicsOfItem(selectedItem);
     }
@@ -119,7 +123,7 @@ public class CatalogueDTO implements Serializable {
     }
 
     private ItemLazyModel initializeItemModel() throws NamingException {
-        itemModel = new ItemLazyModel(selectedCategory,priceRanges);
+        itemModel = new ItemLazyModel(selectedCategory, priceRanges);
         if (itemModel.getPageSize() < DEFAULT_PAGE_SIZE) {
             itemModel.setPageSize(DEFAULT_PAGE_SIZE);
         }
@@ -161,13 +165,13 @@ public class CatalogueDTO implements Serializable {
     }
 
     public void setPriceRanges(List<PriceRange> priceRanges) throws NamingException {
-        if(priceRangesChanged(priceRanges))itemModel=initializeItemModel();
+        if (priceRangesChanged(priceRanges)) itemModel = initializeItemModel();
         this.priceRanges = priceRanges;
     }
 
     private boolean priceRangesChanged(List<PriceRange> priceRanges) {
-        if(priceRanges==null && this.priceRanges==null)return false;
-        if(priceRanges!=null && this.priceRanges==null)return true;
+        if (priceRanges == null && this.priceRanges == null) return false;
+        if (priceRanges != null && this.priceRanges == null) return true;
         return !priceRanges.equals(this.priceRanges);
     }
 }

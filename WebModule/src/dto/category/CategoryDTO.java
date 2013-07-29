@@ -53,10 +53,10 @@ public class CategoryDTO implements Serializable {
 
     @RolesAllowed("ADMIN")
     public void deleteCategory() {
-        if (categoryDAO.isDefaultCategory(selectedCategory)) {
-            createMessage("Cannot delete default category");
-        } else if (selectedCategory != null) {
-            RequestContext.getCurrentInstance().execute("confirm_delete.show();");
+        if (selectedCategory != null) {
+            if (categoryDAO.isDefaultCategory(selectedCategory)) {
+                createMessage("Cannot delete default category");
+            } else RequestContext.getCurrentInstance().execute("PF('confirm_delete').show();");
         } else {
             createMessage("Choose category to delete");
         }
@@ -96,6 +96,7 @@ public class CategoryDTO implements Serializable {
 
     @RolesAllowed("ADMIN")
     public void removeCategory() throws IOException {
+        System.out.println("Remove called");
         categoryDAO.remove(selectedCategory);
         navigateTo(CATEGORIES_PAGE);
     }
